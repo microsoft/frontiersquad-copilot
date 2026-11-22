@@ -6,25 +6,20 @@ import remarkGfm from 'remark-gfm';
 
 export default defineConfig({
 site: 'https://microsoft.github.io',
-base: '/devsquad-copilot/',
+base: '/frontiersquad-copilot/',
 markdown: {
 remarkPlugins: [remarkGfm],
 },
 integrations: [
 mermaid(),
 starlight({
-title: 'DevSquad Copilot',
+title: 'FrontierSquad Copilot',
 description: 'A GitHub Copilot delivery framework that leverages AI agents to ship at the pace of innovation without sacrificing quality, security, and scalability.',
 social: [
-{ icon: 'github', label: 'GitHub', href: 'https://github.com/microsoft/devsquad-copilot' },
+{ icon: 'github', label: 'GitHub', href: 'https://github.com/microsoft/frontiersquad-copilot' },
 ],
-logo: {
-dark: './src/assets/logos/devsquad-logo-medium-transparent.png',
-light: './src/assets/logos/devsquad-logo-medium-transparent.png',
-replacesTitle: false,
-},
 editLink: {
-baseUrl: 'https://github.com/microsoft/devsquad-copilot/edit/main/docs/',
+baseUrl: 'https://github.com/microsoft/frontiersquad-copilot/edit/main/docs/',
 },
 head: [
 {

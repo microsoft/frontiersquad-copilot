@@ -28,7 +28,7 @@ This project uses a **vouch system** to ensure that code contributions come from
 
 ### How it works
 
-1. Open a [Discussion](https://github.com/microsoft/devsquad-copilot/discussions) using the **Vouch Request** template.
+1. Open a [Discussion](https://github.com/microsoft/frontiersquad-copilot/discussions) using the **Vouch Request** template.
 2. Describe what you want to contribute and why.
 3. A maintainer reviews your request and, if approved, adds your username to the vouched contributors list.
 4. Once vouched, you can open Pull Requests.
@@ -45,11 +45,11 @@ PRs from non-vouched contributors are automatically closed with an explanation a
 
 ## I Have a Question
 
-Before you ask a question, please search for existing [Issues](https://github.com/microsoft/devsquad-copilot/issues) that might help you. If you have found a suitable issue and still need clarification, you can write your question in that issue.
+Before you ask a question, please search for existing [Issues](https://github.com/microsoft/frontiersquad-copilot/issues) that might help you. If you have found a suitable issue and still need clarification, you can write your question in that issue.
 
 If you still need to ask a question:
 
-* Open an [Issue](https://github.com/microsoft/devsquad-copilot/issues/new).
+* Open an [Issue](https://github.com/microsoft/frontiersquad-copilot/issues/new).
 * Provide as much context as you can about what you are running into.
 
 ## I Want To Contribute
@@ -63,14 +63,14 @@ If you still need to ask a question:
 #### Before Submitting a Bug Report
 
 * Make sure that you are using the latest version of the project.
-* Check if there is already a bug report for your issue in [GitHub Issues](https://github.com/microsoft/devsquad-copilot/issues).
+* Check if there is already a bug report for your issue in [GitHub Issues](https://github.com/microsoft/frontiersquad-copilot/issues).
 * Collect information about the bug: expected vs actual behavior, steps to reproduce, and relevant environment details.
 
 #### How Do I Submit a Good Bug Report?
 
 We use GitHub Issues to track bugs and errors. If you run into an issue:
 
-* Open an [Issue](https://github.com/microsoft/devsquad-copilot/issues/new).
+* Open an [Issue](https://github.com/microsoft/frontiersquad-copilot/issues/new).
 * Explain the behavior you would expect and the actual behavior.
 * Provide reproduction steps that someone else can follow to recreate the issue.
 * Include which agent or skill is affected, and any relevant configuration.
@@ -80,8 +80,8 @@ We use GitHub Issues to track bugs and errors. If you run into an issue:
 #### Before Submitting an Enhancement
 
 * Make sure that you are using the latest version.
-* Read the [README](./README.md) and [framework documentation](https://microsoft.github.io/devsquad-copilot/framework/) carefully to check if the functionality is already covered.
-* Search existing [Issues](https://github.com/microsoft/devsquad-copilot/issues) to see if the enhancement has already been suggested.
+* Read the [README](./README.md) and [framework documentation](https://microsoft.github.io/frontiersquad-copilot/framework/) carefully to check if the functionality is already covered.
+* Search existing [Issues](https://github.com/microsoft/frontiersquad-copilot/issues) to see if the enhancement has already been suggested.
 
 #### How Do I Submit a Good Enhancement Suggestion?
 
@@ -94,16 +94,16 @@ We use GitHub Issues to track bugs and errors. If you run into an issue:
 
 * **You must be vouched before opening a Pull Request.** See [Vouch System](#vouch-system) for details.
 * Assign an issue to yourself before beginning any effort.
-* If an issue for your contribution does not exist, [file an issue](https://github.com/microsoft/devsquad-copilot/issues/new) first.
+* If an issue for your contribution does not exist, [file an issue](https://github.com/microsoft/frontiersquad-copilot/issues/new) first.
 * Commits should reference related issues for traceability (e.g., "Fixes #123").
 
 #### Local Development Setup
 
-Open the repository root in VS Code and register `.github/plugins/devsquad` in `chat.pluginLocations` in **User Settings**, or **Remote Settings** for a remote window. The repository's `.vscode/settings.json` enables plugin support and nested subagents.
+Open the repository root in VS Code and register `.github/plugins/frontiersquad` in `chat.pluginLocations` in **User Settings**, or **Remote Settings** for a remote window. The repository's `.vscode/settings.json` enables plugin support and nested subagents.
 
-For Copilot CLI, run `copilot --plugin-dir .github/plugins/devsquad` from the repository root.
+For Copilot CLI, run `copilot --plugin-dir .github/plugins/frontiersquad` from the repository root.
 
-See the [Local Development Setup guide](https://microsoft.github.io/devsquad-copilot/contributing/#local-development-setup) for cloning, the settings example, and verification steps. Develop against the local plugin instead of an installed copy.
+See the [Local Development Setup guide](https://microsoft.github.io/frontiersquad-copilot/contributing/#local-development-setup) for cloning, the settings example, and verification steps. Develop against the local plugin instead of an installed copy.
 
 ### Improving The Documentation
 
@@ -115,7 +115,7 @@ Documentation improvements follow the same process as code contributions. If you
 .vscode/
   settings.json    # Plugin support and nested subagent settings
 .github/
-  plugins/devsquad/
+  plugins/frontiersquad/
     agents/        # Custom agents (.agent.md)
     skills/        # Agent skills (SKILL.md per directory)
     hooks/         # Plugin lifecycle scripts and hooks.json
@@ -138,19 +138,19 @@ docs/
 
 | Area | Location | Description |
 |------|----------|-------------|
-| Agents | `.github/plugins/devsquad/agents/` | Specialized agents for each delivery phase |
-| Skills | `.github/plugins/devsquad/skills/` | Reusable capabilities activated by semantic matching |
+| Agents | `.github/plugins/frontiersquad/agents/` | Specialized agents for each delivery phase |
+| Skills | `.github/plugins/frontiersquad/skills/` | Reusable capabilities activated by semantic matching |
 | Instructions | `.github/instructions/` | Path-specific rules applied automatically by glob pattern |
-| Hooks | `.github/plugins/devsquad/hooks/` | Session lifecycle scripts (sessionStart, preToolUse, etc.) |
-| Templates | `docs/templates/` | Files distributed to consumer projects via `devsquad.init` |
-| Documentation | `docs/` ([site](https://microsoft.github.io/devsquad-copilot/)) | Framework architecture, component guides, extensibility |
+| Hooks | `.github/plugins/frontiersquad/hooks/` | Session lifecycle scripts (sessionStart, preToolUse, etc.) |
+| Templates | `docs/templates/` | Files distributed to consumer projects via `frontiersquad.init` |
+| Documentation | `docs/` ([site](https://microsoft.github.io/frontiersquad-copilot/)) | Framework architecture, component guides, extensibility |
 | ADRs | `docs/framework/decisions/` | Architecture Decision Records |
 
 ## Style Guides
 
 ### Agents
 
-* Naming: `devsquad.<phase>.agent.md`
+* Naming: `frontiersquad.<phase>.agent.md`
 * Required frontmatter: `description`, `tools`
 * Instructions must be procedural and imperative (third person)
 * Each agent must have the minimum required tools (principle of least privilege)
@@ -179,7 +179,7 @@ docs/
 * All documentation in English
 * No emojis or decorative Unicode characters
 * Prefer lists and tables over long paragraphs
-* See the [documentation-style skill](.github/plugins/devsquad/skills/documentation-style/SKILL.md) for complete formatting rules
+* See the [documentation-style skill](.github/plugins/frontiersquad/skills/documentation-style/SKILL.md) for complete formatting rules
 
 ### Changelog
 

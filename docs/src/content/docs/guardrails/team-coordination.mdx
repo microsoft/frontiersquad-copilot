@@ -1,9 +1,9 @@
 ---
 title: Team Coordination
-description: How DevSquad prevents conflicting decisions and maintains consistency across parallel developer sessions.
+description: How FrontierSquad prevents conflicting decisions and maintains consistency across parallel developer sessions.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
@@ -20,7 +20,7 @@ ADRs function as the team's "semantic lock":
 
 - ADRs are created with **Status: Proposed** by default
 - An ADR should not move to **Accepted** without review by at least one other team member
-- The `devsquad.plan` agent warns when a developer tries to accept an ADR directly, suggesting creating it as Proposed first
+- The `frontiersquad.plan` agent warns when a developer tries to accept an ADR directly, suggesting creating it as Proposed first
 
 <Aside type="tip">
   Convention: treat `Proposed` ADRs as open for discussion. Sprint reviews and planning sessions are natural checkpoints for accepting ADRs.
@@ -45,7 +45,7 @@ This prevents two developers from independently making conflicting decisions abo
 
 ## Layer 3: Reactive Inconsistency Detection
 
-`@devsquad.refine` serves as the safety net, detecting inconsistencies that slipped through:
+`@frontiersquad.refine` serves as the safety net, detecting inconsistencies that slipped through:
 
 | Category | What It Detects |
 |----------|----------------|
@@ -56,7 +56,7 @@ This prevents two developers from independently making conflicting decisions abo
 | **Stale PRs** | Open, unreviewed, or failing CI |
 | **Unfinished Dependencies** | Blocking tasks still open |
 
-Run `@devsquad.refine` periodically (e.g., before sprint planning) to surface inconsistencies.
+Run `@frontiersquad.refine` periodically (e.g., before sprint planning) to surface inconsistencies.
 
 ## Persistent Artifacts as Source of Truth
 
@@ -70,10 +70,10 @@ The framework does not automatically propagate changes to dependent artifacts:
 
 | Scenario | Current Behavior | Mitigation |
 |----------|-----------------|------------|
-| Spec updated | Existing tasks are not notified | Run `@devsquad.refine` to detect mismatch |
+| Spec updated | Existing tasks are not notified | Run `@frontiersquad.refine` to detect mismatch |
 | ADR superseded | Tasks depending on old decision continue | Refine flags ADR-implementation gaps |
 | Feature canceled | Work items become orphaned | Manual board cleanup |
-| Re-prioritization | Requires manual board update | Use `@devsquad.sprint` to reassess |
+| Re-prioritization | Requires manual board update | Use `@frontiersquad.sprint` to reassess |
 
 <Aside type="caution">
   The framework assumes a single board (GitHub Issues or Azure DevOps). Cross-platform synchronization and multi-board support are not available.

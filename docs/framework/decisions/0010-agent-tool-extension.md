@@ -57,7 +57,7 @@ A sync script reads the original plugin agent files and consumer-provided YAML p
 Consumer YAML schema:
 
 ```yaml
-# .github/devsquad/tool-extensions/devsquad.implement.yaml
+# .github/frontiersquad/tool-extensions/frontiersquad.implement.yaml
 tools:
   - confluence/search_pages
   - confluence/get_page
@@ -95,7 +95,7 @@ The accepted trade-off is the generation step: consumers must run a sync script 
 
 ### YAML contract
 
-Extension files are placed in `.github/devsquad/tool-extensions/<agent-id>.yaml`.
+Extension files are placed in `.github/frontiersquad/tool-extensions/<agent-id>.yaml`.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
@@ -106,9 +106,9 @@ The `tools` list is merged (union) with the original agent's tools. The `instruc
 
 ### Plugin discovery
 
-The sync script must locate the original plugin agent files, which vary by client and install method. The plugin name defaults to `devsquad` but can be overridden via `DEVSQUAD_PLUGIN_NAME` for forks that rename the plugin directory. The script searches the following paths in order:
+The sync script must locate the original plugin agent files, which vary by client and install method. The plugin name defaults to `frontiersquad` but can be overridden via `FRONTIERSQUAD_PLUGIN_NAME` for forks that rename the plugin directory. The script searches the following paths in order:
 
-1. `DEVSQUAD_PLUGIN_DIR` environment variable (explicit path override)
+1. `FRONTIERSQUAD_PLUGIN_DIR` environment variable (explicit path override)
 2. `.github/plugins/${PLUGIN_NAME}/agents/` (in-repo development)
 3. `~/.copilot/installed-plugins/` (Copilot CLI, all subdirectories)
 4. OS-dependent VS Code agent plugins directory:
@@ -116,12 +116,12 @@ The sync script must locate the original plugin agent files, which vary by clien
    - Linux: `~/.config/Code/agentPlugins/`
    - Windows: `%APPDATA%/Code/agentPlugins/`
 
-Within each base directory, the script searches for a `*/${PLUGIN_NAME}/*/agents` path containing `.agent.md` files. This handles variable directory names from marketplace installs (`_direct/microsoft--devsquad-copilot/...`), git URL installs, and VS Code's `github.com/owner/repo/...` layout.
+Within each base directory, the script searches for a `*/${PLUGIN_NAME}/*/agents` path containing `.agent.md` files. This handles variable directory names from marketplace installs (`_direct/microsoft--frontiersquad-copilot/...`), git URL installs, and VS Code's `github.com/owner/repo/...` layout.
 
 | Variable | Default | Purpose |
 |----------|---------|---------|
-| `DEVSQUAD_PLUGIN_NAME` | `devsquad` | Plugin directory name used in discovery and file paths |
-| `DEVSQUAD_PLUGIN_DIR` | (auto-discovered) | Explicit path to the plugin agents directory, skips discovery |
+| `FRONTIERSQUAD_PLUGIN_NAME` | `frontiersquad` | Plugin directory name used in discovery and file paths |
+| `FRONTIERSQUAD_PLUGIN_DIR` | (auto-discovered) | Explicit path to the plugin agents directory, skips discovery |
 
 ### Summary comparison
 
@@ -135,12 +135,12 @@ Within each base directory, the script searches for a `*/${PLUGIN_NAME}/*/agents
 
 ## Implementation Notes
 
-The sync script is authored in the plugin at `.github/plugins/devsquad/hooks/sync-tool-extensions.sh` but is copied to the consumer project at `.github/devsquad/sync-tool-extensions.sh` during scaffolding by the `devsquad.extend` agent. This gives consumers a local, predictable path regardless of how the plugin is installed (Copilot CLI, VS Code, marketplace, direct). When the plugin is updated, the consumer should also re-copy the script to pick up any sync logic changes.
+The sync script is authored in the plugin at `.github/plugins/frontiersquad/hooks/sync-tool-extensions.sh` but is copied to the consumer project at `.github/frontiersquad/sync-tool-extensions.sh` during scaffolding by the `frontiersquad.extend` agent. This gives consumers a local, predictable path regardless of how the plugin is installed (Copilot CLI, VS Code, marketplace, direct). When the plugin is updated, the consumer should also re-copy the script to pick up any sync logic changes.
 
 ## References
 
 * `extensibility.md` -- Tool Extensions section with consumer walkthrough and directory structure
 * `sync-tool-extensions.sh` -- sync script implementation
 * `detect-tool-extensions.sh` -- sessionStart staleness hook
-* `devsquad.extend.agent.md` -- agent that scaffolds tool extensions for consumers
+* `frontiersquad.extend.agent.md` -- agent that scaffolds tool extensions for consumers
 * `mcp-servers.md` -- MCP server configuration reference

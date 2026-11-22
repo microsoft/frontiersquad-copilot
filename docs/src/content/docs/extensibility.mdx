@@ -3,7 +3,7 @@ title: Extensibility
 description: Six extension mechanisms for adding stack-specific, domain-specific, or organization-specific knowledge.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Card, CardGrid, Aside, Steps, Tabs, TabItem, FileTree, LinkCard } from '@astrojs/starlight/components';
@@ -11,7 +11,7 @@ import { Card, CardGrid, Aside, Steps, Tabs, TabItem, FileTree, LinkCard } from 
 The framework is designed to be extended. Six mechanisms are available, each with different activation models, context costs, and complexity.
 
 :::tip
-Not sure which extension mechanism to use? Run `@devsquad.extend` in Copilot Chat for interactive guidance that walks you through the decision.
+Not sure which extension mechanism to use? Run `@frontiersquad.extend` in Copilot Chat for interactive guidance that walks you through the decision.
 :::
 
 ## Extension Mechanisms
@@ -107,7 +107,7 @@ flowchart TD
   <TabItem label="Agents">
     Specialized workflows with isolated context.
 
-    - Naming: `devsquad.<phase>.agent.md`
+    - Naming: `frontiersquad.<phase>.agent.md`
     - Required frontmatter: `description`, `tools`
     - Modalities: Direct (user selects), Sub-agent (programmatic), Both
     - Nested sub-agent invocation supported up to 5 levels in VS Code 1.113+
@@ -118,7 +118,7 @@ flowchart TD
     ```yaml
     ---
     description: Python implementation specialist. Invoked by
-      devsquad.implement for task execution in Python projects.
+      frontiersquad.implement for task execution in Python projects.
     tools:
       - edit/editFiles
       - edit/createFile
@@ -158,22 +158,22 @@ flowchart TD
   <TabItem label="Tool Extensions">
     Inject any MCP server tools into existing plugin agents via YAML patches. (Preview, [ADR 0010](../decisions/#adr-0010-agent-tool-extension-))
 
-    - Consumer creates `.github/devsquad/tool-extensions/*.yml`
+    - Consumer creates `.github/frontiersquad/tool-extensions/*.yml`
     - Sync script generates workspace-level agent overrides in `.github/agents/`
     - `sessionStart` hook detects when extensions are stale or unsynced
 
     **Example**:
 
     ```yaml
-    # .github/devsquad/tool-extensions/jira.yml
+    # .github/frontiersquad/tool-extensions/jira.yml
     name: jira
     description: Jira integration for work items
     mcp:
       server: "@atlassian/jira-mcp"
       transport: stdio
     agents:
-      - devsquad.kickoff
-      - devsquad.decompose
+      - frontiersquad.kickoff
+      - frontiersquad.decompose
     ```
   </TabItem>
 </Tabs>
@@ -187,16 +187,16 @@ flowchart TD
     - resilience-patterns/
       - SKILL.md
   - agents/ (explicit invocation)
-    - devsquad.implement-python.agent.md
-  - plugins/devsquad/
+    - frontiersquad.implement-python.agent.md
+  - plugins/frontiersquad/
     - hooks/ (lifecycle scripts)
       - hooks.json
-  - devsquad/
+  - frontiersquad/
     - tool-extensions/ (MCP tool injection)
 </FileTree>
 
 <Aside type="tip">
-  Use `@devsquad.extend` to get interactive guidance for creating any extension type.
+  Use `@frontiersquad.extend` to get interactive guidance for creating any extension type.
 </Aside>
 
 ## Next Steps

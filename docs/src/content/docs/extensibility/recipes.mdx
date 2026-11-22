@@ -3,7 +3,7 @@ title: Extension Recipes
 description: Step-by-step examples for creating custom instructions, skills, agents, and hooks.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Aside, Steps, Tabs, TabItem, FileTree } from '@astrojs/starlight/components';
@@ -21,12 +21,12 @@ Concrete examples for each extension type. For the decision tree and mechanism c
     - python-patterns/
       - SKILL.md
   - agents/ (specialized workflows)
-    - devsquad.implement-python.agent.md
-  - plugins/devsquad/
+    - frontiersquad.implement-python.agent.md
+  - plugins/frontiersquad/
     - hooks/ (lifecycle scripts)
       - my-hook.sh
       - hooks.json
-  - devsquad/
+  - frontiersquad/
     - tool-extensions/ (MCP tool injection)
       - jira.yml
 </FileTree>
@@ -127,16 +127,16 @@ description: Python implementation patterns for the project. Use when
 
 ## Recipe 3: Add a Specialized Agent
 
-**Goal**: Create a Python implementation specialist invoked by `devsquad.implement`.
+**Goal**: Create a Python implementation specialist invoked by `frontiersquad.implement`.
 
 <Steps>
 1. Create the agent file:
 
    ```yaml
-   # .github/agents/devsquad.implement-python.agent.md
+   # .github/agents/frontiersquad.implement-python.agent.md
    ---
    description: Python implementation specialist. Invoked by
-     devsquad.implement for task execution in Python projects.
+     frontiersquad.implement for task execution in Python projects.
    tools:
      - edit/editFiles
      - edit/createFile
@@ -168,7 +168,7 @@ description: Python implementation patterns for the project. Use when
    3. Commit with conventional format
    ```
 
-3. The agent can be invoked directly with `@devsquad.implement-python` or delegated as a sub-agent.
+3. The agent can be invoked directly with `@frontiersquad.implement-python` or delegated as a sub-agent.
 </Steps>
 
 ---
@@ -182,7 +182,7 @@ description: Python implementation patterns for the project. Use when
 
    ```bash
    #!/bin/bash
-   # .github/plugins/devsquad/hooks/validate-python-imports.sh
+   # .github/plugins/frontiersquad/hooks/validate-python-imports.sh
 
    FILE="$1"
 
@@ -210,14 +210,14 @@ description: Python implementation patterns for the project. Use when
      "hooks": [
        {
          "event": "postToolUse",
-         "command": ".github/plugins/devsquad/hooks/validate-python-imports.sh",
+         "command": ".github/plugins/frontiersquad/hooks/validate-python-imports.sh",
          "timeout": 10000
        }
      ]
    }
    ```
 
-3. Make the script executable: `chmod +x .github/plugins/devsquad/hooks/validate-python-imports.sh`
+3. Make the script executable: `chmod +x .github/plugins/frontiersquad/hooks/validate-python-imports.sh`
 </Steps>
 
 <Aside type="caution">
@@ -234,16 +234,16 @@ description: Python implementation patterns for the project. Use when
 1. Create the tool extension YAML:
 
    ```yaml
-   # .github/devsquad/tool-extensions/jira.yml
+   # .github/frontiersquad/tool-extensions/jira.yml
    name: jira
    description: Jira integration for work item management
    mcp:
      server: "@atlassian/jira-mcp"
      transport: stdio
    agents:
-     - devsquad.kickoff
-     - devsquad.decompose
-     - devsquad.implement
+     - frontiersquad.kickoff
+     - frontiersquad.decompose
+     - frontiersquad.implement
    ```
 
 2. Run the sync script to generate workspace-level agent overrides in `.github/agents/`.

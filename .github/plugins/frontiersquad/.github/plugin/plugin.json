@@ -1,0 +1,16 @@
+{
+  "name": "frontiersquad",
+  "description": "A GitHub Copilot delivery framework with guardrails to make AI-assisted development consistent, traceable, and maintainable.",
+  "version": "0.13.0",
+  "author": {
+    "name": "Microsoft CSU FrontierSquad"
+  },
+  "homepage": "https://github.com/microsoft/frontiersquad-copilot",
+  "repository": "https://github.com/microsoft/frontiersquad-copilot",
+  "license": "MIT",
+  "keywords": ["sdd", "spec-driven", "delivery", "planning", "implementation", "frontiersquad", "codewith"],
+  "agents": "agents/",
+  "skills": ["skills/"],
+  "hooks": "hooks/hooks.json",
+  "mcpServers": ".mcp.json"
+}

@@ -5,10 +5,10 @@
 
 ## Context
 
-The framework ships a suite of delegated executors (`devsquad.*` agents) and instructs consumer repos to author specs that those agents implement. Two structural gaps surfaced while evaluating the discipline described in "The Architecture of Intent" (AoI):
+The framework ships a suite of delegated executors (`frontiersquad.*` agents) and instructs consumer repos to author specs that those agents implement. Two structural gaps surfaced while evaluating the discipline described in "The Architecture of Intent" (AoI):
 
-* The framework's own agents (specify, plan, decompose, implement, review, plus the sub-agent fleet) have no explicit behavioral envelope. A reviewer reading `devsquad.implement.agent.md` cannot determine, in under a minute, what the agent is authorized to do, what it must never do (beyond the runtime `tools:` array), and how it composes its sub-agents.
-* The spec template (`.github/plugins/devsquad/hooks/templates/docs/features/TEMPLATE.md`) treats every feature as a product feature. Consumer teams using devsquad to spec AI-agent capabilities in their own products have no template fragment for behavioral constraints or operational cost commitments. They either reinvent the structure ad hoc or omit it.
+* The framework's own agents (specify, plan, decompose, implement, review, plus the sub-agent fleet) have no explicit behavioral envelope. A reviewer reading `frontiersquad.implement.agent.md` cannot determine, in under a minute, what the agent is authorized to do, what it must never do (beyond the runtime `tools:` array), and how it composes its sub-agents.
+* The spec template (`.github/plugins/frontiersquad/hooks/templates/docs/features/TEMPLATE.md`) treats every feature as a product feature. Consumer teams using frontiersquad to spec AI-agent capabilities in their own products have no template fragment for behavioral constraints or operational cost commitments. They either reinvent the structure ad hoc or omit it.
 
 A third, smaller gap exists in the failure-diagnosis surface (`debugging-recovery`, `quality-gate`): there is no upstream-artifact taxonomy that maps a failure to the artifact that should change. Patches accumulate in prompts and agent files instead of in specs or composition declarations.
 
@@ -42,7 +42,7 @@ Adopted. Four targeted constructs layered onto the existing framework:
 
 1. `## Behavioral Constraints` body section on user-facing agents (5 coordinators plus `specify` and `decompose`). Captures rules the runtime `tools:` array cannot enforce (e.g., "never APPROVE on a PR", "never commits to integration branch"). Worker sub-agents carry no manifest; they inherit their envelope from their parent's composition declaration and their own `description:` frontmatter.
 2. Spec Evolution Log section in feature and migration spec templates, plus a gated `AI Cost Posture` block in the feature template (model-tier commitment, latency budget, prompt-stability invariant, per-call cost ceiling, cost-incident escalation). The block is gated by `Describes AI capability: yes/no`; when `no`, the block is omitted and the template is unchanged in size for the reader. Behavioral constraints on AI-capability specs use the general `Invariants` section; composition uses the general `Requirements` and `User Scenarios` sections.
-3. `## Composition` body section on 4 coordinator agents (`devsquad.implement`, `devsquad.plan`, `devsquad.review`, `devsquad.refine`). Declares load-bearing cross-component invariants between the coordinator and its typed sub-agents. The runtime surfaces each sub-agent's `description:` at invocation time, so the section does not re-list sub-agents.
+3. `## Composition` body section on 4 coordinator agents (`frontiersquad.implement`, `frontiersquad.plan`, `frontiersquad.review`, `frontiersquad.refine`). Declares load-bearing cross-component invariants between the coordinator and its typed sub-agents. The runtime surfaces each sub-agent's `description:` at invocation time, so the section does not re-list sub-agents.
 4. Three-category upstream-artifact failure taxonomy (`failure (spec)`, `failure (validation)`, `failure (agent)`) in `debugging-recovery`, with one worked example showing the spec-vs-validation distinction. Each category maps to one upstream artifact that owns the fix. `quality-gate` consults the same three categories when recording failure-driven amendments in the Spec Evolution Log trigger column.
 
 **Evaluation against priorities**:
@@ -88,7 +88,7 @@ The implementation lands in the framework `CHANGELOG.md` under the next release 
 
 ## Implementation Notes
 
-1. All template changes carry the standard provenance header (`<!-- devsquad-template: ... vX.Y.Z sha=... -->`) and require a version bump in both `plugin.json` copies plus a `CHANGELOG.md` entry.
+1. All template changes carry the standard provenance header (`<!-- frontiersquad-template: ... vX.Y.Z sha=... -->`) and require a version bump in both `plugin.json` copies plus a `CHANGELOG.md` entry.
 2. The four copy-source templates (`docs/features/TEMPLATE.md`, `docs/migrations/TEMPLATE.md`, `docs/envisioning/TEMPLATE.md`, `docs/architecture/decisions/ADR-TEMPLATE.md`) continue to carry no inline provenance header. The manifest lock remains their sole provenance source.
 3. The four constructs in the Decision are independently reviewable. The order between them is enforced by content (body sections must exist before `quality-gate` can enforce them; failure taxonomy must reference agent body fields), not by ADR.
 4. The four AoI signal metrics, the running scenarios, the pattern catalog, and the phase rename remain out of scope.

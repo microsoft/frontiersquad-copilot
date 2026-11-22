@@ -5,14 +5,14 @@ on:
     paths:
       - '.github/plugin/plugin.json'
       - '.github/plugin/marketplace.json'
-      - '.github/plugins/devsquad/.github/plugin/plugin.json'
+      - '.github/plugins/frontiersquad/.github/plugin/plugin.json'
       - '.github/workflows/version-parity.yml'
   push:
     branches: [main]
     paths:
       - '.github/plugin/plugin.json'
       - '.github/plugin/marketplace.json'
-      - '.github/plugins/devsquad/.github/plugin/plugin.json'
+      - '.github/plugins/frontiersquad/.github/plugin/plugin.json'
 
 jobs:
   check-version-parity:
@@ -26,12 +26,12 @@ jobs:
           set -euo pipefail
 
           ROOT_PLUGIN=$(jq -r '.version' .github/plugin/plugin.json)
-          INNER_PLUGIN=$(jq -r '.version' .github/plugins/devsquad/.github/plugin/plugin.json)
-          MARKETPLACE=$(jq -r '.plugins[] | select(.name == "devsquad") | .version' .github/plugin/marketplace.json)
+          INNER_PLUGIN=$(jq -r '.version' .github/plugins/frontiersquad/.github/plugin/plugin.json)
+          MARKETPLACE=$(jq -r '.plugins[] | select(.name == "frontiersquad") | .version' .github/plugin/marketplace.json)
 
-          echo "Root plugin.json:        ${ROOT_PLUGIN}"
-          echo "Inner plugin.json:       ${INNER_PLUGIN}"
-          echo "Marketplace devsquad:    ${MARKETPLACE}"
+          echo "Root plugin.json:            ${ROOT_PLUGIN}"
+          echo "Inner plugin.json:           ${INNER_PLUGIN}"
+          echo "Marketplace frontiersquad:   ${MARKETPLACE}"
 
           if [ "${ROOT_PLUGIN}" != "${INNER_PLUGIN}" ] || [ "${ROOT_PLUGIN}" != "${MARKETPLACE}" ]; then
             echo ""

@@ -31,20 +31,20 @@ The framework currently has no mechanism for this. Agents cannot learn from past
 
 ### Option 1: Store learnings in `.memory/harness-learnings.md`
 
-Use the existing `.memory/` directory (the same mechanism used by `board-config.md` and `git-config.md`) to store a structured markdown file of codebase-specific learnings. A new skill (`harness-learnings`) provides capture and consult procedures. Learnings follow a two-tier lifecycle: Tier 1 captures in `.memory/` with confidence scoring, Tier 2 promotes proven learnings to permanent harness controls via `devsquad.extend`.
+Use the existing `.memory/` directory (the same mechanism used by `board-config.md` and `git-config.md`) to store a structured markdown file of codebase-specific learnings. A new skill (`harness-learnings`) provides capture and consult procedures. Learnings follow a two-tier lifecycle: Tier 1 captures in `.memory/` with confidence scoring, Tier 2 promotes proven learnings to permanent harness controls via `frontiersquad.extend`.
 
 **Evaluation against priorities**:
 * **Zero-friction capture**: `.memory/` is a local directory. Writing a learning is a file edit, no PR or approval required. The skill provides a structured format so agents produce consistent entries.
 * **Immediate availability**: The file exists on disk. The next session reads it on phase start.
 * **Whole-lifecycle coverage**: The skill is invoked by any agent at any phase. Capture triggers are embedded in implement, verify, review, refine, and debugging-recovery. Consumption is filtered by phase and dimension.
 * **Self-curation**: Confidence scoring (low/medium/high), occurrence tracking, auto-pruning of stale unconfirmed entries (60 days), conflict detection, and a size cap (200 entries) with promotion pressure.
-* **Path to durability**: Two-tier design. When confidence reaches high and occurrences reach 3+, the skill suggests promotion to instruction/hook/skill via `devsquad.extend`. Promotion is human-gated.
+* **Path to durability**: Two-tier design. When confidence reaches high and occurrences reach 3+, the skill suggests promotion to instruction/hook/skill via `frontiersquad.extend`. Promotion is human-gated.
 * **Low context cost**: Agents filter by Phase and Dimension fields, scanning only relevant entries. The structured format (one heading per learning) supports selective reading.
 * **Consistency**: `.memory/` is the established convention for workspace-level state. The pattern (hook seeds file, skill reads/writes file, agents consult file) is identical to board-config and git-config.
 
 ### Option 2: Patch harness source code directly
 
-When a recurring failure is detected, propose a concrete patch to the harness source: a new instruction rule in `.instructions.md`, a new hook script, or a skill amendment. Changes go through `devsquad.extend` and require human approval.
+When a recurring failure is detected, propose a concrete patch to the harness source: a new instruction rule in `.instructions.md`, a new hook script, or a skill amendment. Changes go through `frontiersquad.extend` and require human approval.
 
 **Evaluation against priorities**:
 * **Zero-friction capture**: Does not meet this priority. Every learning requires a code change and human approval. High friction discourages consistent capture.
@@ -87,7 +87,7 @@ Key trade-off accepted: `.memory/` is workspace-local and typically gitignored, 
 3. Add capture triggers to: `implement.execute` (after self-correction loops), `implement.verify` (after finding issues), `review` (after Major/Critical findings), `refine.health` (after drift detection), `debugging-recovery` (after successful triage), `implement.finalize` (after human PR feedback).
 4. Add consult steps to (initial rollout): `implement.execute` (before coding), `implement.verify` (before running tests), `review.code` (before checking patterns).
 5. Add consult steps to (follow-up): `plan` (architecture learnings during design), `specify` (behaviour learnings when writing conformance cases).
-6. Define promotion criteria: confidence = high AND occurrences >= 3 triggers a suggestion to harden via `devsquad.extend`.
+6. Define promotion criteria: confidence = high AND occurrences >= 3 triggers a suggestion to harden via `frontiersquad.extend`.
 7. Implement staleness rules: auto-prune entries with confidence = low that have not been seen in 60 days.
 8. Implement conflict detection: before writing a new learning, check for contradictions with existing entries on the same scope (file paths/modules).
 

@@ -1,7 +1,7 @@
 {
-  "name": "devsquad-copilot",
+  "name": "frontiersquad-copilot",
   "owner": {
-    "name": "Microsoft CSU DevSquad"
+    "name": "Microsoft CSU FrontierSquad"
   },
   "metadata": {
     "description": "A GitHub Copilot delivery framework with guardrails to make AI-assisted development consistent, traceable, and maintainable.",
@@ -9,11 +9,11 @@
   },
   "plugins": [
     {
-      "name": "devsquad",
+      "name": "frontiersquad",
       "description": "A GitHub Copilot delivery framework with guardrails to make AI-assisted development consistent, traceable, and maintainable.",
-      "version": "0.12.0",
-      "source": "./.github/plugins/devsquad",
-      "homepage": "https://github.com/microsoft/devsquad-copilot"
+      "version": "0.13.0",
+      "source": "./.github/plugins/frontiersquad",
+      "homepage": "https://github.com/microsoft/frontiersquad-copilot"
     }
   ]
 }

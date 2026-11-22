@@ -1,9 +1,9 @@
 ---
 title: Glossary
-description: Key terms and concepts used throughout the DevSquad Copilot framework.
+description: Key terms and concepts used throughout the FrontierSquad Copilot framework.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -19,13 +19,13 @@ A gated section in the feature spec template, required when the spec declares `D
 ## C
 
 **Behavioral Constraints (agent body section)**
-A `## Behavioral Constraints` section on a user-facing agent file listing rules the agent must honor even when its runtime `tools:` array would permit otherwise (for example, "never APPROVE on a PR"; "never commits to integration branch"). The `tools:` list is the runtime authority boundary; this section captures only what the runtime cannot enforce. Present on the seven user-facing agents (`devsquad`, `devsquad.implement`, `devsquad.plan`, `devsquad.review`, `devsquad.refine`, `devsquad.specify`, `devsquad.decompose`); worker sub-agents inherit their envelope from the parent.
+A `## Behavioral Constraints` section on a user-facing agent file listing rules the agent must honor even when its runtime `tools:` array would permit otherwise (for example, "never APPROVE on a PR"; "never commits to integration branch"). The `tools:` list is the runtime authority boundary; this section captures only what the runtime cannot enforce. Present on the seven user-facing agents (`frontiersquad`, `frontiersquad.implement`, `frontiersquad.plan`, `frontiersquad.review`, `frontiersquad.refine`, `frontiersquad.specify`, `frontiersquad.decompose`); worker sub-agents inherit their envelope from the parent.
 
 **Comprehension Checkpoint**
 A verification step triggered before medium or high impact tasks. The agent asks the developer to describe what will happen in their own words, ensuring active understanding rather than passive delegation. Generic responses ("ok", "go") trigger deeper questions. See [Comprehension Checkpoints](../../concepts/comprehension-checkpoints/).
 
 **Conductor**
-The central `devsquad` agent that detects user intent and delegates to specialist agents. It contains no domain logic, only routing and orchestration. See [Conductor](../../agents/conductor/).
+The central `frontiersquad` agent that detects user intent and delegates to specialist agents. It contains no domain logic, only routing and orchestration. See [Conductor](../../agents/conductor/).
 
 **Conformance Criteria**
 Testable conditions (identified by CC-XXX format) that verify a specification requirement is met. Each includes a scenario, input, and expected output.
@@ -86,7 +86,7 @@ An adaptive approach where agents ask clarifying questions, surface trade-offs, 
 A required section in every feature and migration spec that records amendment history. Each row carries version, date, change summary, trigger (`new work`, `drift`, `external constraint`, one of three `failure (<category>)` values, or `other (<short reason>)`), and author. The log is the durable signal that the spec changed and why. See [Spec Amendment](../../concepts/spec-amendment/).
 
 **Specialist Agent**
-An agent that owns the logic for a specific delivery phase (e.g., `devsquad.specify` for specifications, `devsquad.implement` for code). Can be invoked directly or through the conductor.
+An agent that owns the logic for a specific delivery phase (e.g., `frontiersquad.specify` for specifications, `frontiersquad.implement` for code). Can be invoked directly or through the conductor.
 
 **STRIDE**
 A threat modeling methodology (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) used by the security review process.
@@ -94,7 +94,7 @@ A threat modeling methodology (Spoofing, Tampering, Repudiation, Information Dis
 ## T
 
 **Tool Extension**
-A mechanism for injecting MCP server tools into existing plugin agents via YAML patches (Preview, [ADR 0010](../../decisions/#adr-0010-agent-tool-extension-)). Consumer creates `.github/devsquad/tool-extensions/*.yml`, and a sync script generates workspace-level agent overrides.
+A mechanism for injecting MCP server tools into existing plugin agents via YAML patches (Preview, [ADR 0010](../../decisions/#adr-0010-agent-tool-extension-)). Consumer creates `.github/frontiersquad/tool-extensions/*.yml`, and a sync script generates workspace-level agent overrides.
 
 ## U
 

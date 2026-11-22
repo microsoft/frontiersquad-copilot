@@ -3,7 +3,7 @@ title: Lifecycle Agents
 description: The seven agents that form the main delivery pipeline from initialization to implementation.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Card, CardGrid, Aside, Steps, Badge } from '@astrojs/starlight/components';
@@ -30,7 +30,7 @@ flowchart LR
 
 ---
 
-## devsquad.init <Badge text="Setup" variant="note" />
+## frontiersquad.init <Badge text="Setup" variant="note" />
 
 Initialize or update a project with SDD Framework files.
 
@@ -49,7 +49,7 @@ Uses a deterministic shell script for file operations (verify, create, update, d
 
 ---
 
-## devsquad.envision <Badge text="Vision" variant="success" />
+## frontiersquad.envision <Badge text="Vision" variant="success" />
 
 Capture strategic vision through structured questions.
 
@@ -70,7 +70,7 @@ Three modes: Interactive (guided questions), Direct (context provided), Incremen
 
 ---
 
-## devsquad.kickoff <Badge text="Structure" variant="success" />
+## frontiersquad.kickoff <Badge text="Structure" variant="success" />
 
 Structure project hierarchy (epics, features, dependencies) and sync with the board.
 
@@ -94,7 +94,7 @@ Epic granularity test (4 criteria): independent delivery, distinct ownership, ow
 
 ---
 
-## devsquad.specify <Badge text="Specification" variant="tip" />
+## frontiersquad.specify <Badge text="Specification" variant="tip" />
 
 Create or update feature/migration specifications with user stories and compliance criteria.
 
@@ -113,7 +113,7 @@ Key characteristics:
 
 ---
 
-## devsquad.plan <Badge text="Architecture" variant="tip" />
+## frontiersquad.plan <Badge text="Architecture" variant="tip" />
 
 Technical planning with ADRs, data model, contracts, and architecture decisions.
 
@@ -127,12 +127,12 @@ Socratic approach to architecture:
 - Explores options through questions, not prescriptions
 - ADR creation with duplicate checking, Microsoft Learn lookup, Azure cost estimates
 - Coordinator workflow can delegate context loading and architecture analysis to worker sub-agents before authoring design artifacts
-- Security decisions trigger `devsquad.security` assessment
+- Security decisions trigger `frontiersquad.security` assessment
 - Engineering practices guidance (CI/CD, branching, observability, IaC)
 
 ---
 
-## devsquad.decompose <Badge text="Tasks" variant="caution" />
+## frontiersquad.decompose <Badge text="Tasks" variant="caution" />
 
 Decompose specs into user stories, tasks, and work items.
 
@@ -154,7 +154,7 @@ Mandatory phases: Setup, Foundational, User Stories (P1, P2, P3), Polish
 
 ---
 
-## devsquad.implement <Badge text="Code" variant="danger" />
+## frontiersquad.implement <Badge text="Code" variant="danger" />
 
 Execute implementation from `tasks.md`, a GitHub issue, or an Azure DevOps work item.
 

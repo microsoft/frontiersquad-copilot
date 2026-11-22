@@ -1,0 +1,159 @@
+---
+name: quality-gate
+description: Quality gate for SDD artifacts (specs, ADRs, tasks, code). Use when generating or updating specs, ADRs, task decomposition, or code implementation to validate quality before delivering to the user. Do not use for linting, code formatting, human code review, or validation of intermediate artifacts marked as draft/WIP.
+---
+
+# Quality Gate — SDD Artifact Validation
+
+## Principle
+
+SDD artifacts propagate quality downstream: a vague spec generates ambiguous tasks that generate incorrect code. Evaluating quality at the point of creation is cheaper than fixing it later.
+
+## When to Use
+
+Use this skill **after generating an artifact and before presenting it to the user**:
+
+| Agent | Artifact | Activate when |
+|-------|----------|---------------|
+| `frontiersquad.specify` | spec.md | Spec generated or updated |
+| `frontiersquad.plan` | ADRs, plan.md | ADR created or plan finalized |
+| `frontiersquad.decompose` | tasks.md, work items | Task decomposition completed |
+| `frontiersquad.implement` | Code | Medium or high impact task implemented |
+| `frontiersquad.extend` | `*.agent.md` | Custom agent created or modified |
+
+**Do not use for**: low impact tasks (typo, log, formatting), intermediate artifacts that will be reviewed manually, or when the user explicitly asks to skip validation.
+
+## General Flow
+
+```
+Generate artifact → Evaluate against rubric → Identify failures → Fix → Re-evaluate (if needed) → Deliver
+```
+
+Maximum of **2 correction iterations**. If after 2 attempts there are still failures, deliver the artifact with documented failures for human decision.
+
+## Evaluation Levels
+
+Evaluation depth scales with the artifact's risk. Use the classification from the `complexity-analysis` skill when available, or infer from context.
+
+| Level | When | What to evaluate |
+|-------|------|------------------|
+| **Quick** | Low impact, established pattern | Only critical criteria (immediate FAIL) |
+| **Standard** | Medium impact, most artifacts | Complete rubric for the artifact type |
+| **Deep** | High impact, high risk, first time | Complete rubric + cross-verification with related artifacts |
+
+---
+
+## Rubrics by Artifact Type
+
+Each artifact type has a dedicated rubric. Read **only** the rubric for the artifact being evaluated:
+
+| Artifact | Rubric |
+|----------|--------|
+| spec.md (feature) | Read `references/rubrica-spec.md` |
+| spec.md (migration) | Read `references/rubrica-migration-spec.md` |
+| ADR | Read `references/rubrica-adr.md` |
+| tasks.md / work items | Read `references/rubrica-tasks.md` |
+| Code (implementation) | Read `references/rubrica-code.md` |
+
+To determine spec type: if the spec is under `docs/migrations/`, use the migration rubric. If under `docs/features/`, use the feature rubric.
+
+---
+
+## Output Format
+
+After evaluation, present the result in a compact form. Adapt to the evaluation level.
+
+### If ALL critical criteria pass
+
+```
+Evaluation: [artifact type]
+Result: OK (N/N critical criteria pass)
+Alerts: [list quality criteria that failed, if any]
+```
+
+Proceed with delivery to the user.
+
+### If any critical criterion FAILS
+
+```
+Evaluation: [artifact type]
+Result: FAILURES FOUND
+
+Critical:
+- [ID]: [dimension] — [what is wrong] → [how to fix]
+
+Quality:
+- [ID]: [dimension] — [observation]
+
+Fixing automatically...
+```
+
+Fix the critical issues, re-evaluate, and only then deliver.
+
+### If failures persist after 2 iterations
+
+```
+Evaluation: [artifact type]
+Result: PERSISTENT FAILURES (after 2 correction attempts)
+
+Unresolved failures:
+- [ID]: [dimension] — [description] — Reason: [why it could not be resolved]
+
+Action needed: Human decision on how to proceed.
+```
+
+Deliver the artifact with documented failures.
+
+---
+
+## Convergence and Limits
+
+| Parameter | Value | Justification |
+|-----------|-------|---------------|
+| Max correction iterations | 2 | Avoid infinite loop. If 2 attempts don't resolve it, the problem requires human intervention. |
+| Timeout per evaluation | Proportional to artifact | Spec: evaluate all dimensions. Task with 50 items: 30% sampling. |
+| Sampling for tasks | If > 20 tasks, evaluate 100% of critical criteria + 30% sample for quality | Balance between coverage and context cost. |
+
+## When NOT to Evaluate
+
+- User explicitly asked to skip: "generate directly", "no validation"
+- Artifact is a declared draft: "draft", "WIP", "exploratory"
+- Re-evaluation of an artifact that already passed (unless it has been modified)
+
+## Recording Failure-Driven Amendments
+
+When `quality-gate` evaluates a spec, ADR, or agent file that was amended in response to a failure (rather than to add new scope), require the Spec Evolution Log Trigger column to use one of the three failure category names from `debugging-recovery/references/failure-taxonomy.md`:
+
+| Trigger value | Use when |
+|---|---|
+| `failure (spec)` | Amendment closes a case the spec did not previously cover, disambiguates a clause, or tightens Non-Scope |
+| `failure (validation)` | Amendment adds a conformance case, test, or rubric criterion the validation surface missed |
+| `failure (agent)` | Amendment fixes a misaligned agent body, composition declaration, tool config, or handoff |
+
+For non-failure triggers (new work, drift detected proactively, external constraint), use `new work`, `drift`, or `external constraint`. For a trigger that does not fit either set, use `other (<short reason>)` as a transitional escape hatch; this raises a quality alert prompting the maintainers to consider whether a new category is warranted.
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "AI-generated code is probably fine" | AI code needs more scrutiny, not less. It is confident and plausible, even when wrong. |
+| "The tests pass, so it is good" | Tests are necessary but not sufficient. They do not catch architecture problems, security issues, or readability concerns. |
+| "It works, that is good enough" | Working code that is unreadable, insecure, or architecturally wrong creates debt that compounds. |
+| "This is a simple change, skip validation" | Simple changes break builds. Validation is fast for simple artifacts anyway. |
+| "We will clean it up later" | Later never comes. The quality gate is the enforcement point. Use it. |
+
+## Red Flags
+
+- Artifacts approved without evidence of actual evaluation
+- Review that only checks if tests pass (ignoring other dimensions)
+- Accepting "I will fix it later" without a concrete work item
+- Security-sensitive changes without security-focused evaluation
+- No regression tests accompanying bug fix implementations
+
+## Anti-patterns
+
+- Do not invent problems to seem useful. If the artifact is good, say "OK" and move on.
+- Do not evaluate style or formatting that is already covered by markdownlint or existing linters.
+- Do not block delivery for quality criteria (only critical criteria block).
+- Do not re-evaluate infinitely: maximum 2 iterations, then escalate to human.
+- Do not evaluate artifacts outside the scope of the current agent (e.g., frontiersquad.specify does not evaluate tasks).

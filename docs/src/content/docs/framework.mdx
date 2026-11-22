@@ -3,7 +3,7 @@ title: Framework Architecture
 description: Design principles, architecture patterns, and usage scenarios. How small teams achieve fast, structured delivery with AI agents.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Card, CardGrid, Aside, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
@@ -51,11 +51,11 @@ The framework is shaped by a few deliberate choices about how agents behave, how
 
 ### Agent Interaction
 
-The framework follows a conductor pattern: the user interacts with the `devsquad` conductor, which delegates to specialist agents by phase. Complex specialist agents also act as coordinators, delegating to focused worker sub-agents with isolated context. This nested sub-agent architecture enables parallel execution and context isolation without adding extra user requests.
+The framework follows a conductor pattern: the user interacts with the `frontiersquad` conductor, which delegates to specialist agents by phase. Complex specialist agents also act as coordinators, delegating to focused worker sub-agents with isolated context. This nested sub-agent architecture enables parallel execution and context isolation without adding extra user requests.
 
 ```mermaid
 flowchart LR
-  user["User"] --> conductor["devsquad<br>(conductor)"]
+  user["User"] --> conductor["frontiersquad<br>(conductor)"]
   user -.->|"direct invocation"| agents
 
   conductor -->|"delegates<br/>by phase"| agents
@@ -154,7 +154,7 @@ flowchart TD
 
 ## Conductor Pattern
 
-The central `devsquad` agent implements a **Mediated Coordinator-Worker** pattern ([ADR 0001](../decisions/#adr-0001-agent-orchestration-)):
+The central `frontiersquad` agent implements a **Mediated Coordinator-Worker** pattern ([ADR 0001](../decisions/#adr-0001-agent-orchestration-)):
 
 - Detects user intent and delegates to the appropriate specialist agent
 - Allows coordinator specialists to continue delegation to focused worker sub-agents
@@ -256,7 +256,7 @@ Dashed arrows: auto-activated (agent does not explicitly request). Solid arrows:
 ## Known Limitations
 
 <Aside type="caution">
-  - **No automatic impact propagation**: When specs or ADRs are updated, dependent artifacts are not automatically refreshed. Use `@devsquad.refine` to detect inconsistencies.
+  - **No automatic impact propagation**: When specs or ADRs are updated, dependent artifacts are not automatically refreshed. Use `@frontiersquad.refine` to detect inconsistencies.
   - **Single board assumption**: The framework assumes a single GitHub Issues or Azure DevOps board. Cross-platform sync is not supported.
 </Aside>
 

@@ -5,7 +5,7 @@
 
 ## Context
 
-GitHub Copilot currently limits subagent nesting to 1 level: a subagent cannot spawn another subagent. The framework uses a conductor pattern (`devsquad`) that delegates to specialized agents (L1), some of which spawn their own sub-agents (L2). When the user invokes the conductor, L1 agents fail to reach L2. Direct invocation works because there is only 1 level of nesting.
+GitHub Copilot currently limits subagent nesting to 1 level: a subagent cannot spawn another subagent. The framework uses a conductor pattern (`frontiersquad`) that delegates to specialized agents (L1), some of which spawn their own sub-agents (L2). When the user invokes the conductor, L1 agents fail to reach L2. Direct invocation works because there is only 1 level of nesting.
 
 Affected chains:
 
@@ -25,7 +25,7 @@ Handoffs (`handoffs:` field) also fail under the conductor because they either a
 2. **No capability loss** — L1 agents must retain all functionality currently provided by L2 agents (security review, backlog health analysis, init file generation). Tool coverage was verified: every L2 agent's tools are a subset of its L1 consumer's tools.
 3. **Maintainability** — Shared logic (e.g., security used by 3 agents) must not be duplicated. Changes to shared workflows should require editing a single file.
 4. **Minimal architectural churn** — Prefer patterns already established in the framework over introducing new protocol concepts.
-5. **Direct invocation preserved** — Users who invoke specialized agents directly (e.g., `@devsquad.plan`) must retain the same functionality they have today.
+5. **Direct invocation preserved** — Users who invoke specialized agents directly (e.g., `@frontiersquad.plan`) must retain the same functionality they have today.
 
 ## Options Considered
 
@@ -42,7 +42,7 @@ Convert L2 agent logic into skills (SKILL.md). L1 agents load the skill instruct
 - **No capability loss**: All L2 tools are subsets of their L1 consumers (verified). Skills provide the same instructions the L2 agents followed. No tool gaps.
 - **Maintainability**: Single `security-review` skill shared by 3 consumers. One edit propagates everywhere. `refine` is flattened (single consumer, no duplication risk).
 - **Minimal architectural churn**: Skills are an established pattern (14+ skills already exist). No new protocol concepts. Zero conductor changes.
-- **Direct invocation preserved**: Standalone agent files (`devsquad.security`, `devsquad.refine`) remain unchanged for direct use.
+- **Direct invocation preserved**: Standalone agent files (`frontiersquad.security`, `frontiersquad.refine`) remain unchanged for direct use.
 
 ### Option 2: Trampoline pattern
 
@@ -96,8 +96,8 @@ Parallel execution for `init` sub-agents is also lost, but initialization is a o
 1. **New skills to create**: `security-review/`, `init-config/`, `init-docs/`, `init-scaffold/`.
 2. **Flatten `refine` into `sprint`**: Single consumer, 257 lines. Absorb directly rather than creating a skill.
 3. **L1 agent changes**: Remove `agents:` field and `agent` tool from `implement`, `plan`, `review`, `sprint`, `init`. Add skill loading instructions.
-4. **Keep standalone agents**: `devsquad.security` and `devsquad.refine` remain as agents for direct invocation (`@devsquad.security`). No changes to these files.
-5. **Delete or archive**: `devsquad.init-config`, `devsquad.init-docs`, `devsquad.init-scaffold` (marked `user-invocable: false`, only used as sub-agents). Can be removed after skill equivalents are validated.
+4. **Keep standalone agents**: `frontiersquad.security` and `frontiersquad.refine` remain as agents for direct invocation (`@frontiersquad.security`). No changes to these files.
+5. **Delete or archive**: `frontiersquad.init-config`, `frontiersquad.init-docs`, `frontiersquad.init-scaffold` (marked `user-invocable: false`, only used as sub-agents). Can be removed after skill equivalents are validated.
 
 ## References
 

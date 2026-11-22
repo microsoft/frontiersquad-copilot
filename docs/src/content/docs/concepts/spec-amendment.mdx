@@ -3,7 +3,7 @@ title: Spec Amendment During Implementation
 description: How the framework handles discoveries made during implementation that invalidate or extend the current spec or ADRs, without falling back to silent deviation or big-design-up-front.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Card, CardGrid, Aside, Steps } from '@astrojs/starlight/components';
@@ -65,7 +65,7 @@ The implement agent (via the `validate` and `execute` workers) and the developer
 
 1. **Implement agent detects drift.**
 
-   Either `devsquad.implement.validate` (pre-flight) or `devsquad.implement.execute` (mid-execution) compares the emerging model against the current spec and ADRs. If the discrepancy meets the amendment criteria, the worker returns a `spec-drift` flag with a structured payload: affected artifact and section, original statement, observed reality, impacted RF/CC/story IDs, recommended scope, and confidence. The coordinator pauses the task instead of proceeding.
+   Either `frontiersquad.implement.validate` (pre-flight) or `frontiersquad.implement.execute` (mid-execution) compares the emerging model against the current spec and ADRs. If the discrepancy meets the amendment criteria, the worker returns a `spec-drift` flag with a structured payload: affected artifact and section, original statement, observed reality, impacted RF/CC/story IDs, recommended scope, and confidence. The coordinator pauses the task instead of proceeding.
 
 2. **Developer confirms the model shift.**
 
@@ -73,11 +73,11 @@ The implement agent (via the `validate` and `execute` workers) and the developer
 
 3. **Lightweight amendment is recorded.**
 
-   The `devsquad.refine` agent is invoked mid-flight with the `[AMEND]` prefix (not only between sprints) to update the spec or ADR. The amendment is scoped: only the affected user story, conformance case, or ADR section is touched. The reasoning log captures *what changed and why*.
+   The `frontiersquad.refine` agent is invoked mid-flight with the `[AMEND]` prefix (not only between sprints) to update the spec or ADR. The amendment is scoped: only the affected user story, conformance case, or ADR section is touched. The reasoning log captures *what changed and why*.
 
 4. **Re-decomposition is explicitly triggered.**
 
-   After the amendment, the coordinator invokes `devsquad.decompose` to regenerate tasks so they reflect the amended spec. Developers should expect task IDs and board items to churn; v1 does not yet support section-scoped re-decomposition with stable IDs (see Known Limitations).
+   After the amendment, the coordinator invokes `frontiersquad.decompose` to regenerate tasks so they reflect the amended spec. Developers should expect task IDs and board items to churn; v1 does not yet support section-scoped re-decomposition with stable IDs (see Known Limitations).
 
 5. **Implementation resumes.**
 
@@ -97,8 +97,8 @@ flowchart TD
   suggest --> confirm{"Developer<br/>confirms?"}
   confirm -->|"Reject"| continue
   confirm -->|"Defer"| backlog["Flag for next refine cycle"]
-  confirm -->|"Accept"| amend["devsquad.refine: scoped update"]
-  amend --> redecompose["devsquad.decompose:<br/>regenerate feature tasks"]
+  confirm -->|"Accept"| amend["frontiersquad.refine: scoped update"]
+  amend --> redecompose["frontiersquad.decompose:<br/>regenerate feature tasks"]
   redecompose --> resume["Resume implementation<br/>against amended spec"]
 ```
 
@@ -112,8 +112,8 @@ Amendment path:
 
 1. The implement agent flags drift: the recipient is behaving like an entity, not a value. The payload names the impacted user story, the CC-XXX cases for "create occasion", and the persistence ADR.
 2. The developer confirms; the change touches persisted data shape and a user story boundary, not an internal detail.
-3. `devsquad.refine` amends the spec: recipients become a first-class entity with their own user story. The affected conformance cases for "create occasion" are rewritten to reference a recipient by ID. One ADR on persistence gains a new ranked priority: "support recipient-first queries".
-4. `devsquad.decompose` regenerates the task list for the feature so it reflects the amended spec. Task IDs for the feature change; the developer re-syncs the board.
+3. `frontiersquad.refine` amends the spec: recipients become a first-class entity with their own user story. The affected conformance cases for "create occasion" are rewritten to reference a recipient by ID. One ADR on persistence gains a new ranked priority: "support recipient-first queries".
+4. `frontiersquad.decompose` regenerates the task list for the feature so it reflects the amended spec. Task IDs for the feature change; the developer re-syncs the board.
 5. Implementation resumes against the amended spec.
 
 The alternative is silent deviation: code ships with a recipient entity while the spec still says string, and the next agent or developer starts from a stale map.
@@ -127,7 +127,7 @@ The alternative is silent deviation: code ships with a recipient entity while th
 
 ## Propagation Checklist (High-Impact Amendments)
 
-A high-impact amendment often invalidates artifacts beyond the spec and ADR it directly edits. The refine agent runs a propagation checklist on every high-impact amendment and returns the results to the implement coordinator. The coordinator blocks resume until each flagged artifact is either updated (via `devsquad.plan`) or explicitly waived.
+A high-impact amendment often invalidates artifacts beyond the spec and ADR it directly edits. The refine agent runs a propagation checklist on every high-impact amendment and returns the results to the implement coordinator. The coordinator blocks resume until each flagged artifact is either updated (via `frontiersquad.plan`) or explicitly waived.
 
 | Artifact | What to check |
 |---|---|
@@ -137,17 +137,17 @@ A high-impact amendment often invalidates artifacts beyond the spec and ADR it d
 | `research.md` | Research findings that underpinned the now-amended decision |
 | Related ADRs | Ranked priorities that shift as a consequence of the amended ADR |
 
-The refine agent does not edit these artifacts in amendment mode. It flags them; the follow-up pass happens in `devsquad.plan` with its own classification and ceremony.
+The refine agent does not edit these artifacts in amendment mode. It flags them; the follow-up pass happens in `frontiersquad.plan` with its own classification and ceremony.
 
 ## Known Limitations (v1)
 
 The amendment seam is intentionally minimal in the first iteration. These gaps are tracked and will close incrementally.
 
-- **Re-decomposition is not scope-aware yet.** After a successful amendment, `devsquad.decompose` regenerates tasks for the whole feature, not only the amended section. Developers should expect task IDs and board items to churn until stable task IDs with supersede semantics land.
-- **Design artifacts beyond spec and ADR are not auto-propagated.** The propagation checklist flags `plan.md`, `data-model.md`, `contracts/`, and `research.md` when they exist, but the framework does not yet update them automatically. A manual follow-up `devsquad.plan` pass is required before implementation resumes.
+- **Re-decomposition is not scope-aware yet.** After a successful amendment, `frontiersquad.decompose` regenerates tasks for the whole feature, not only the amended section. Developers should expect task IDs and board items to churn until stable task IDs with supersede semantics land.
+- **Design artifacts beyond spec and ADR are not auto-propagated.** The propagation checklist flags `plan.md`, `data-model.md`, `contracts/`, and `research.md` when they exist, but the framework does not yet update them automatically. A manual follow-up `frontiersquad.plan` pass is required before implementation resumes.
 - **Multi-developer concurrency is not guarded.** If another developer is mid-implementation on a task derived from the amended section, their branch may become semantically stale without a merge conflict. Manual coordination is the current mitigation.
 - **No strict mode for regulated contexts.** The default is suggest-only with confirm, reject, or defer. Reject and defer allow continuation under a known-stale spec; teams with compliance or audit constraints should configure their own gate until a strict mode ships.
-- **Structured drift payload is advisory.** The payload fields (artifact, section, impacted IDs, confidence) are produced by `devsquad.implement.validate` and `devsquad.implement.execute`; they are not yet enforced as a schema. Malformed payloads fall back to prose.
+- **Structured drift payload is advisory.** The payload fields (artifact, section, impacted IDs, confidence) are produced by `frontiersquad.implement.validate` and `frontiersquad.implement.execute`; they are not yet enforced as a schema. Malformed payloads fall back to prose.
 
 ## Interaction with Impact Classification
 

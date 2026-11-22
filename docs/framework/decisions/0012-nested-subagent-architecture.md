@@ -119,7 +119,7 @@ Key trade-off accepted: increased file count (estimated 15-20 new worker agent f
 
 1. **Setting requirement**: Consumer repos must enable `chat.subagents.allowInvocationsFromSubagents: true`. Document in framework README and consider adding to `.vscode/settings.json` template.
 2. **Phase 1 (quick wins)**:
-   - Fix `plan` -> `security` wiring (add `agents: ['devsquad.security']` and `agent` tool to plan frontmatter).
+   - Fix `plan` -> `security` wiring (add `agents: ['frontiersquad.security']` and `agent` tool to plan frontmatter).
    - Enable recursive self-reference in `decompose` for complex epics.
 3. **Phase 2 (review decomposition)**: Decompose `review` into coordinator + 5 parallel checkers. Clearest parallel benefit, lowest risk (read-only workers).
 4. **Phase 3 (implement decomposition)**: Decompose `implement` into coordinator + 5 workers. Highest complexity, test thoroughly.
