@@ -1,14 +1,14 @@
 ---
 title: Cost & Token Usage
-description: How to estimate the GitHub Copilot cost of running DevSquad Copilot end-to-end, using a token baseline you convert with your model's current rates.
+description: How to estimate the GitHub Copilot cost of running FrontierSquad Copilot end-to-end, using a token baseline you convert with your model's current rates.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Card, CardGrid, Aside, Steps, LinkCard } from '@astrojs/starlight/components';
 
-Use this page to project the cost of adopting DevSquad Copilot. It converts the framework's token consumption into a planning baseline you can map to your own models and plan.
+Use this page to project the cost of adopting FrontierSquad Copilot. It converts the framework's token consumption into a planning baseline you can map to your own models and plan.
 
 The baseline is expressed in **tokens**, which stay stable over time, with a simple method to convert tokens into dollars or GitHub AI Credits using your model's current rates. Actual usage varies with codebase size, model choice, retry loops, and how much context lives outside the framework.
 
@@ -159,7 +159,7 @@ Framework prompts are a small fraction of real cost. The dominant terms are:
 
 ### Framework overhead
 
-What DevSquad Copilot adds on top of an unstructured Copilot session producing similar code:
+What FrontierSquad Copilot adds on top of an unstructured Copilot session producing similar code:
 
 | Source of overhead | Tokens per medium feature |
 | --- | ---: |
@@ -190,7 +190,7 @@ Listed in order of leverage:
 
 1. Pick one medium feature.
 
-2. Run the full sequence end-to-end: `/devsquad.specify`, then `/devsquad.plan`, then `/devsquad.decompose`, then `/devsquad.implement`, then `/devsquad.review`.
+2. Run the full sequence end-to-end: `/frontiersquad.specify`, then `/frontiersquad.plan`, then `/frontiersquad.decompose`, then `/frontiersquad.implement`, then `/frontiersquad.review`.
 
 3. Download the usage report CSV from the premium request analytics page. Each row includes `aic_quantity` and `aic_gross_amount`.
 
@@ -214,7 +214,7 @@ Listed in order of leverage:
 ## Next steps
 
 <CardGrid>
-  <LinkCard title="Install & First Run" href="../getting-started/" description="Set up DevSquad Copilot and run your first phase." />
+  <LinkCard title="Install & First Run" href="../getting-started/" description="Set up FrontierSquad Copilot and run your first phase." />
   <LinkCard title="Framework Architecture" href="../framework/" description="How agents, context, and traceability fit together." />
   <LinkCard title="Models and pricing (GitHub docs)" href="https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing" description="Live per-token rates to plug into the formula above." />
 </CardGrid>

@@ -3,7 +3,7 @@ title: Support Agents
 description: Agents for review, security, sprint planning, backlog health, and framework extension.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Card, CardGrid, Aside, Badge } from '@astrojs/starlight/components';
@@ -12,7 +12,7 @@ Five agents handle the non-linear parts of delivery: code review, security asses
 
 ---
 
-## devsquad.review <Badge text="Quality" variant="success" />
+## frontiersquad.review <Badge text="Quality" variant="success" />
 
 Validate implementation against spec, ADRs, and plan with independent context.
 
@@ -37,7 +37,7 @@ Self-correction loop: maximum 2 attempts before escalating findings.
 
 ---
 
-## devsquad.security <Badge text="Security" variant="danger" />
+## frontiersquad.security <Badge text="Security" variant="danger" />
 
 Security assessment in two modes: architectural (design-time) and code (implementation-time).
 
@@ -68,7 +68,7 @@ Triggers: authentication/authorization, sensitive data, external integrations, e
 
 ---
 
-## devsquad.sprint <Badge text="Planning" variant="tip" />
+## frontiersquad.sprint <Badge text="Planning" variant="tip" />
 
 Sprint planning with previous sprint closure, velocity analysis, and adaptive capacity.
 
@@ -93,7 +93,7 @@ Operating principles: Options not recommendations. Dependencies visible. Gaps vi
 
 ---
 
-## devsquad.refine <Badge text="Health" variant="note" /> <Badge text="Amendment" variant="tip" />
+## frontiersquad.refine <Badge text="Health" variant="note" /> <Badge text="Amendment" variant="tip" />
 
 Analyze backlog health, detect inconsistencies between specs, ADRs, and work items, and apply scoped spec/ADR amendments when implementation reveals drift.
 
@@ -106,7 +106,7 @@ Analyze backlog health, detect inconsistencies between specs, ADRs, and work ite
 Two modes:
 
 - **Backlog health** (default): between-sprint analysis across six categories.
-- **Spec Amendment** (triggered by `[AMEND]` prompt prefix from `devsquad.implement`): scoped, surgical update to a single spec/ADR section when the implement agent raises a `spec-drift` flag. See [Spec Amendment During Implementation](../../concepts/spec-amendment/).
+- **Spec Amendment** (triggered by `[AMEND]` prompt prefix from `frontiersquad.implement`): scoped, surgical update to a single spec/ADR section when the implement agent raises a `spec-drift` flag. See [Spec Amendment During Implementation](../../concepts/spec-amendment/).
 
 Six backlog-health analysis categories:
 1. **Spec-Board Mismatch**: Specs updated after tasks were created
@@ -118,11 +118,11 @@ Six backlog-health analysis categories:
 
 Principles: Read-first with surgical edits. Facts, not opinions. No false positives. Configurable scope. In Spec Amendment mode, suggest-only: the developer confirms every amendment via the implement coordinator; the agent never auto-rewrites specs on its own judgment.
 
-Execution model: `devsquad.refine` can fan out artifact analysis and backlog health checks into parallel workers, then merge the results into a single report.
+Execution model: `frontiersquad.refine` can fan out artifact analysis and backlog health checks into parallel workers, then merge the results into a single report.
 
 ---
 
-## devsquad.extend <Badge text="Extension" variant="note" />
+## frontiersquad.extend <Badge text="Extension" variant="note" />
 
 Guide creation of extensions for the SDD framework.
 

@@ -2,7 +2,7 @@
 
 ## Plugin not found after update
 
-**Symptom**: VS Code shows "Plugin source directory '.github/plugins/devsquad' not found in repository" when installing or updating.
+**Symptom**: VS Code shows "Plugin source directory '.github/plugins/frontiersquad' not found in repository" when installing or updating.
 
 **Cause**: VS Code caches the plugin marketplace repository locally and does not always re-fetch on update.
 
@@ -13,14 +13,14 @@
 
    ```bash
    # macOS / Linux
-   rm -rf ~/Library/Application\ Support/Code/agentPlugins/github.com/microsoft/devsquad-copilot
+   rm -rf ~/Library/Application\ Support/Code/agentPlugins/github.com/microsoft/frontiersquad-copilot
 
    # Windows
-   rmdir /s "%APPDATA%\Code\agentPlugins\github.com\microsoft\devsquad-copilot"
+   rmdir /s "%APPDATA%\Code\agentPlugins\github.com\microsoft\frontiersquad-copilot"
    ```
 
 3. Restart VS Code
-4. Open the Extensions view (`Cmd+Shift+X` / `Ctrl+Shift+X`), search `@agentPlugins devsquad`, and reinstall
+4. Open the Extensions view (`Cmd+Shift+X` / `Ctrl+Shift+X`), search `@agentPlugins frontiersquad`, and reinstall
 
 ## Hooks fail with "command not found"
 

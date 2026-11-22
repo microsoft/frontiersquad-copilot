@@ -1,9 +1,9 @@
 ---
 title: Getting Started
-description: Install DevSquad Copilot, initialize your project, and run your first workflow.
+description: Install FrontierSquad Copilot, initialize your project, and run your first workflow.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Steps, Tabs, TabItem, Aside, Card, CardGrid, LinkCard, LinkButton, FileTree } from '@astrojs/starlight/components';
@@ -34,7 +34,7 @@ Install the plugin, initialize your project, and start building.
 
    <Tabs syncKey="platform">
      <TabItem label="VS Code" icon="vscode">
-       <LinkButton href="vscode://chat-plugin/install?source=microsoft/devsquad-copilot" variant="primary" icon="rocket" iconPlacement="start" class="sl-text-sm" style="padding: 0.35rem 1rem;">Install</LinkButton>
+       <LinkButton href="vscode://chat-plugin/install?source=microsoft/frontiersquad-copilot" variant="primary" icon="rocket" iconPlacement="start" class="sl-text-sm" style="padding: 0.35rem 1rem;">Install</LinkButton>
 
        <Aside type="note" title="Updates">
          Plugins auto-update on a 24-hour cycle. To update immediately, run the `Chat: Update Plugins` command.
@@ -46,14 +46,14 @@ Install the plugin, initialize your project, and start building.
        Register the plugin from the marketplace, then install it:
 
        ```bash
-       copilot plugin marketplace add microsoft/devsquad-copilot
-       copilot plugin install devsquad@devsquad-copilot
+       copilot plugin marketplace add microsoft/frontiersquad-copilot
+       copilot plugin install frontiersquad@frontiersquad-copilot
        ```
 
        To update an installed plugin to the latest version:
 
        ```bash
-       copilot plugin update devsquad
+       copilot plugin update frontiersquad
        ```
 
        <Aside type="note" title="No auto-update">
@@ -73,26 +73,26 @@ Install the plugin, initialize your project, and start building.
        Open the Chat panel and select the conductor:
 
        ```
-       /agents devsquad
+       /agents frontiersquad
        ```
      </TabItem>
      <TabItem label="GitHub Copilot CLI" icon="github">
        ```bash
-       copilot --agent devsquad:devsquad
+       copilot --agent frontiersquad:frontiersquad
        ```
 
        <Aside type="tip" title="Unattended Mode">
          The `--yolo` flag enables unattended mode, where the agent operates autonomously by automatically approving terminal commands, file changes, and tool usage without requiring user confirmation.
 
          ```bash
-         copilot --agent devsquad:devsquad --yolo
+         copilot --agent frontiersquad:frontiersquad --yolo
          ```
        </Aside>
      </TabItem>
    </Tabs>
 
    <Aside type="note">
-     Once familiar with the workflow, you can invoke agents directly (e.g., `devsquad.implement`, `devsquad.security`). See [Agents Overview](../agents/overview/) for the full catalog.
+     Once familiar with the workflow, you can invoke agents directly (e.g., `frontiersquad.implement`, `frontiersquad.security`). See [Agents Overview](../agents/overview/) for the full catalog.
    </Aside>
 
 4. **Initialize the Project**

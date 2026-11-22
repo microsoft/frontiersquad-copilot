@@ -58,7 +58,7 @@ Complemented by:
 
 Differentiated model by activation type (Option 3). The combination of mechanisms allows optimizing the trade-off between determinism and context efficiency on a case-by-case basis.
 
-The accepted trade-off is greater cognitive complexity for the consumer: they need to decide which mechanism to use. The framework mitigates this with a decision tree documented in [extensibility.md](../extensibility.md) and the [devsquad.extend](../../../.github/plugins/devsquad/agents/devsquad.extend.agent.md) agent that guides the choice.
+The accepted trade-off is greater cognitive complexity for the consumer: they need to decide which mechanism to use. The framework mitigates this with a decision tree documented in [extensibility.md](../extensibility.md) and the [frontiersquad.extend](../../../.github/plugins/frontiersquad/agents/frontiersquad.extend.agent.md) agent that guides the choice.
 
 ### Selection criteria
 
@@ -84,9 +84,9 @@ Skills with generic descriptions may not activate when needed (under-triggering)
 | Context efficiency | Low (always loads) | Good (on demand) | High (optimized per case) |
 | Predictability | High | Low | Balanced |
 | Reusability | Partial | High | High |
-| Consumer complexity | Low | Low | Medium (mitigated by docs and devsquad.extend) |
+| Consumer complexity | Low | Low | Medium (mitigated by docs and frontiersquad.extend) |
 
 ## References
 
 * [Framework Extensibility](../extensibility.md) (decision tree and examples)
-* [Agent devsquad.extend](../../../.github/plugins/devsquad/agents/devsquad.extend.agent.md) (interactive selection guide)
+* [Agent frontiersquad.extend](../../../.github/plugins/frontiersquad/agents/frontiersquad.extend.agent.md) (interactive selection guide)

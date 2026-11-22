@@ -16,12 +16,23 @@ See `CONTRIBUTING.md` for full conventions.
 
 ## [Unreleased]
 
+## [v0.13.0] - 2026-11-22
+
+### Breaking / Migration Required
+
+- **Framework and repository renamed to FrontierSquad Copilot**: Repository (`microsoft/frontiersquad-copilot`), GitHub Pages URL (`/frontiersquad-copilot/`), marketplace catalog (`frontiersquad-copilot`), plugin identifier (`frontiersquad`), plugin source path (`.github/plugins/frontiersquad`), all 28 agent identifiers (`frontiersquad` and `frontiersquad.<phase>`), environment variables (`FRONTIERSQUAD_PLUGIN_NAME`, `FRONTIERSQUAD_PLUGIN_DIR`), consumer state directory (`.github/frontiersquad/`), and template provenance header (`frontiersquad-template:`) replace the previous namespace with no legacy fallback. Existing consumers keeping the old plugin or directory paths will fail agent resolution, hook execution, and lockfile checks. See ADR 0015.
+- **Consumer action:** Register the `microsoft/frontiersquad-copilot` marketplace source, uninstall the old plugin, install `frontiersquad@frontiersquad-copilot` (and clear stale VS Code `agentPlugins` cache if needed), rename `.github/` consumer state directories and tool-extension YAML filenames to `frontiersquad`, strip old line-1 template provenance comments before running `sdd-init.sh update-all`, and update agent invocations to `frontiersquad`.
+
+### Removed
+
+- Removed legacy header and hero raster logo PNGs (`docs/src/assets/logos/`) and their references in `README.md`, `docs/astro.config.mjs`, and `docs/src/content/docs/index.mdx`.
+
 ### Template changes (consumer action required)
 
 - Documentation style guidance now favors descriptive names and links over invented identifiers in newly written or rewritten text. Preserve existing references, native board IDs, ADR numbers, technical identifiers, and IDs still required by artifact-specific templates and verification rules. No automatic cleanup of existing documents is required.
-- **Consumer action:** Update the DevSquad plugin and apply the naming guidance to existing `.github/copilot-instructions.md` and `.github/instructions/documentation-style.instructions.md`, or preview `sdd-init.sh update-all --dry-run` and review all planned overwrites before applying `sdd-init.sh update-all`.
+- **Consumer action:** Update the FrontierSquad plugin and apply the naming guidance to existing `.github/copilot-instructions.md` and `.github/instructions/documentation-style.instructions.md`, or preview `sdd-init.sh update-all --dry-run` and review all planned overwrites before applying `sdd-init.sh update-all`.
 - Documentation style instructions and the `documentation-style` skill now explicitly forbid introducing the em-dash character (Unicode U+2014) in newly written or rewritten Markdown and discourage semicolons in prose. Recast sentences for natural flow while preserving their meaning, without mechanically replacing punctuation with abrupt sentence breaks. Semicolons required by code, technical syntax, or verbatim quotations remain allowed. Preserve existing text outside the requested scope. Existing documents do not require a cleanup.
-- **Consumer action:** Update the DevSquad plugin for the skill change. Apply the same scoped rules to existing `.github/copilot-instructions.md` and `.github/instructions/documentation-style.instructions.md` files, or preview `sdd-init.sh update-all --dry-run` and review all planned overwrites before applying `sdd-init.sh update-all` to refresh managed files.
+- **Consumer action:** Update the FrontierSquad plugin for the skill change. Apply the same scoped rules to existing `.github/copilot-instructions.md` and `.github/instructions/documentation-style.instructions.md` files, or preview `sdd-init.sh update-all --dry-run` and review all planned overwrites before applying `sdd-init.sh update-all` to refresh managed files.
 
 ### Changed
 
@@ -31,12 +42,12 @@ See `CONTRIBUTING.md` for full conventions.
 
 ### Added (Agent Intent Governance — selective Architecture of Intent adoption)
 
-Closes three structural gaps in the framework: framework agents had no explicit behavioral envelope (a reviewer reading `devsquad.implement.agent.md` could not determine in under a minute what the agent was authorized to do, must never do, or how it composes sub-agents); consumer specs describing AI capabilities had no canonical fragment for operational cost commitments; the failure-diagnosis surface had no taxonomy mapping a failure to the upstream artifact that owns the fix. Vocabulary and discipline drawn from "The Architecture of Intent" by Marcel Aldecoa (`https://marcelaldecoa.github.io/TheArchitectureOfIntent/`). The framework adopts the load-bearing principles and deliberately omits parts of the source vocabulary that add no behavior (see "AoI constructs considered and not adopted" in ADR 0014).
+Closes three structural gaps in the framework: framework agents had no explicit behavioral envelope (a reviewer reading `frontiersquad.implement.agent.md` could not determine in under a minute what the agent was authorized to do, must never do, or how it composes sub-agents); consumer specs describing AI capabilities had no canonical fragment for operational cost commitments; the failure-diagnosis surface had no taxonomy mapping a failure to the upstream artifact that owns the fix. Vocabulary and discipline drawn from "The Architecture of Intent" by Marcel Aldecoa (`https://marcelaldecoa.github.io/TheArchitectureOfIntent/`). The framework adopts the load-bearing principles and deliberately omits parts of the source vocabulary that add no behavior (see "AoI constructs considered and not adopted" in ADR 0014).
 
 **Agent body conventions:**
 
-- `## Behavioral Constraints` body section on 7 user-facing agents (`devsquad`, `devsquad.implement`, `devsquad.plan`, `devsquad.review`, `devsquad.refine`, `devsquad.specify`, `devsquad.decompose`). Captures rules the runtime `tools:` array cannot enforce (for example, "never APPROVE on a PR", "never commits to integration branch"). Worker sub-agents (`*.execute`, `*.verify`, `*.finalize`, `*.validate`, `*.context`, `*.architecture`, `*.design`, `*.code`, `*.tests`, `*.spec`, `*.adr`, `*.security`, `*.artifacts`, `*.health`) carry no manifest; they inherit their envelope from the parent's composition declaration and from their own `description:` frontmatter, which the runtime surfaces at invocation time.
-- `## Composition` body section on 4 coordinator agents (`devsquad.implement`, `devsquad.plan`, `devsquad.review`, `devsquad.refine`). Declares load-bearing cross-component invariants between the coordinator and its typed sub-agents (for example, `validate` runs before `execute` for Medium and High impact tasks; `plan.context` runs before `plan.architecture` and `plan.design`; the parent never downgrades a sub-Guardian's severity finding).
+- `## Behavioral Constraints` body section on 7 user-facing agents (`frontiersquad`, `frontiersquad.implement`, `frontiersquad.plan`, `frontiersquad.review`, `frontiersquad.refine`, `frontiersquad.specify`, `frontiersquad.decompose`). Captures rules the runtime `tools:` array cannot enforce (for example, "never APPROVE on a PR", "never commits to integration branch"). Worker sub-agents (`*.execute`, `*.verify`, `*.finalize`, `*.validate`, `*.context`, `*.architecture`, `*.design`, `*.code`, `*.tests`, `*.spec`, `*.adr`, `*.security`, `*.artifacts`, `*.health`) carry no manifest; they inherit their envelope from the parent's composition declaration and from their own `description:` frontmatter, which the runtime surfaces at invocation time.
+- `## Composition` body section on 4 coordinator agents (`frontiersquad.implement`, `frontiersquad.plan`, `frontiersquad.review`, `frontiersquad.refine`). Declares load-bearing cross-component invariants between the coordinator and its typed sub-agents (for example, `validate` runs before `execute` for Medium and High impact tasks; `plan.context` runs before `plan.architecture` and `plan.design`; the parent never downgrades a sub-Guardian's severity finding).
 
 **Template changes (consumer action required):**
 
@@ -58,7 +69,7 @@ Consumers running `sdd-init.sh update-all` after upgrading will see these files 
 - `failure-taxonomy.md` reference file added to the `debugging-recovery` skill. Three-category upstream-artifact principle: `failure (spec)` (artifact: `spec.md`, ADR, glossary, or Non-Scope section), `failure (validation)` (artifact: conformance criteria, tests, or rubric file), `failure (agent)` (artifact: agent file body or `agents:` frontmatter, composition declaration, MCP/tool config, or handoff). One worked example shows the spec-vs-validation distinction end-to-end (silent empty-email field in a signup flow).
 - `debugging-recovery/SKILL.md` Failure Source Classification step routes agent-originated failures into the three categories before triage.
 - `quality-gate/SKILL.md` Recording Failure-Driven Amendments uses the same three categories as canonical Spec Evolution Log trigger values.
-- `devsquad.refine.agent.md` Exception gate references the three categories when classifying findings.
+- `frontiersquad.refine.agent.md` Exception gate references the three categories when classifying findings.
 
 **Architecture Decision Record:**
 
@@ -86,22 +97,22 @@ The source vocabulary in "The Architecture of Intent" includes constructs this r
 ### Added
 
 - **`sdd-init.sh` template provenance**: each distributed file (except the four copy-source templates that consumers duplicate per artifact) now carries a one-line provenance header recording the originating plugin version and a SHA prefix of the template body.
-- **`.github/devsquad/manifest.lock`**: tracks every managed file with `plugin_version`, `template_sha`, and `written_at`. The lock lives alongside `tool-extensions.lock` in the existing `.github/devsquad/` namespace. `sdd-init.sh verify` exposes `recorded_version` per file when a lock entry exists.
-- **`update-all --dry-run`**: previews what `sdd-init.sh update-all` would create or update without writing. The default destructive behavior is unchanged so existing automation in `devsquad.init` and the init skills continues to work.
+- **`.github/frontiersquad/manifest.lock`**: tracks every managed file with `plugin_version`, `template_sha`, and `written_at`. The lock lives alongside `tool-extensions.lock` in the existing `.github/frontiersquad/` namespace. `sdd-init.sh verify` exposes `recorded_version` per file when a lock entry exists.
+- **`update-all --dry-run`**: previews what `sdd-init.sh update-all` would create or update without writing. The default destructive behavior is unchanged so existing automation in `frontiersquad.init` and the init skills continues to work.
 - **Timestamped backups on apply**: `update-all` writes `<target>.pre-<version>-<unix>.bak` before overwriting an existing file, so repeated applies within one plugin version do not collide.
-- **`version-parity.yml` workflow**: fails a PR if `.github/plugin/plugin.json`, `.github/plugins/devsquad/.github/plugin/plugin.json`, and `.github/plugin/marketplace.json` disagree on the plugin version.
+- **`version-parity.yml` workflow**: fails a PR if `.github/plugin/plugin.json`, `.github/plugins/frontiersquad/.github/plugin/plugin.json`, and `.github/plugin/marketplace.json` disagree on the plugin version.
 - **CHANGELOG conventions**: two new categories (`Breaking / Migration Required`, `Template changes (consumer action required)`) documented in `CONTRIBUTING.md` to make compatibility impact explicit on every release.
 
 ### Changed
 
 - **`sdd-init.sh` status comparison**: `file_status()` and `cmd_diff` now strip the provenance header from both sides before comparing. Consumer repos that pre-date the header rollout still report `up-to-date` if their body matches; the first `update-all` after upgrade adds the header without flagging spurious drift.
-- **`devsquad.specify` agent step name**: a stale `Generate Compliance Criteria` step is renamed to `Generate Conformance Criteria` so the agent matches the rest of its own flow and the rubrics.
+- **`frontiersquad.specify` agent step name**: a stale `Generate Compliance Criteria` step is renamed to `Generate Conformance Criteria` so the agent matches the rest of its own flow and the rubrics.
 
 ### Fixed
 
-- **Work item state transitions skipped during implement**: `work-item-workflow` Phase 1 (assignee + Active) and `devsquad.implement.finalize` board update were treated as advisory and frequently skipped, leaving issues and work items in `New` through the full implement and PR cycle. Source detection in the `work-item-workflow` skill now activates board mode whenever a work item ID is reachable from the user's request, recent conversation, or tasks.md, even when the user phrases the request without an ID. Phase 1 is documented as a precondition in `devsquad.implement` (no code-editing tool runs until the task and parent user story are Active with the current user as assignee). The Assignee check in `work-item-workflow` now names the exact MCP calls (`github/issue_write` with `method: update` and `assignees`, or `ado/wit_update_work_item` with `System.AssignedTo`) and stops on assignment failure rather than silently proceeding. The `devsquad.implement.finalize` worker replaces the soft "update as appropriate" instruction with an explicit state machine (`Active` on start, `Resolved` on PR open, `Closed` on merge) and reports `Board Updated: #<id> <previous> -> <new>` in its structured output so the coordinator can detect skipped transitions.
+- **Work item state transitions skipped during implement**: `work-item-workflow` Phase 1 (assignee + Active) and `frontiersquad.implement.finalize` board update were treated as advisory and frequently skipped, leaving issues and work items in `New` through the full implement and PR cycle. Source detection in the `work-item-workflow` skill now activates board mode whenever a work item ID is reachable from the user's request, recent conversation, or tasks.md, even when the user phrases the request without an ID. Phase 1 is documented as a precondition in `frontiersquad.implement` (no code-editing tool runs until the task and parent user story are Active with the current user as assignee). The Assignee check in `work-item-workflow` now names the exact MCP calls (`github/issue_write` with `method: update` and `assignees`, or `ado/wit_update_work_item` with `System.AssignedTo`) and stops on assignment failure rather than silently proceeding. The `frontiersquad.implement.finalize` worker replaces the soft "update as appropriate" instruction with an explicit state machine (`Active` on start, `Resolved` on PR open, `Closed` on merge) and reports `Board Updated: #<id> <previous> -> <new>` in its structured output so the coordinator can detect skipped transitions.
 - **Harness learnings rarely captured automatically**: `harness-learnings` capture was specified as passive bullets in `implement.execute`, `implement.verify`, `review.code`, and `implement.finalize`, conditioned on a "codebase-specific" judgment call, so the agent typically skipped capture unless the user explicitly asked. Each agent now has a `Learning Capture Checkpoint` step with concrete numeric triggers (2+ correction attempts, REGRESSION/COVERAGE_GAP verdict, Major/Critical findings, contradicted human PR feedback) and surfaces a `[Y]/[N]/[E]` prompt (default `[Y]`) before returning output. The skill itself now documents the four auto-prompt sites in a `How This Skill Is Invoked` section.
-- **PR body silently failed to auto-close issues**: the `pull-request` skill template showed `Closes #[number]` as a placeholder without explaining that the keyword itself is what triggers GitHub's `closingIssuesReferences`. Spike PRs and PRs authored with `Refs #N` (instead of one of the magic keywords `close/closes/closed/fix/fixes/fixed/resolve/resolves/resolved`) merged cleanly but left the resolved issue open, requiring manual close and board correction. The `pull-request` skill now lists the recognized keywords, distinguishes resolved (`Closes`) from referenced (`Refs`), spells out the spike-PR case, and adds a pre-flight check that verifies the body contains a closing keyword for every work item the PR resolves before calling `github/create_pull_request` or `ado/repo_pull_request_write`. The `devsquad.implement.finalize` worker requires the same pre-flight verification before delegating to the skill.
+- **PR body silently failed to auto-close issues**: the `pull-request` skill template showed `Closes #[number]` as a placeholder without explaining that the keyword itself is what triggers GitHub's `closingIssuesReferences`. Spike PRs and PRs authored with `Refs #N` (instead of one of the magic keywords `close/closes/closed/fix/fixes/fixed/resolve/resolves/resolved`) merged cleanly but left the resolved issue open, requiring manual close and board correction. The `pull-request` skill now lists the recognized keywords, distinguishes resolved (`Closes`) from referenced (`Refs`), spells out the spike-PR case, and adds a pre-flight check that verifies the body contains a closing keyword for every work item the PR resolves before calling `github/create_pull_request` or `ado/repo_pull_request_write`. The `frontiersquad.implement.finalize` worker requires the same pre-flight verification before delegating to the skill.
 - **Version drift**: `.github/plugin/marketplace.json` was at `0.11.0` while both `plugin.json` files were at `0.11.1`. Bumped to match.
 
 ## [v0.11.1] - 2026-04-29
@@ -115,13 +126,13 @@ The source vocabulary in "The Architecture of Intent" includes constructs this r
 ### Added
 
 - **New skills**: `test-discipline` (pragmatic TDD), `deep-clarification` (decision-tree interview), `domain-glossary` (term extraction and consistency), `triage-workflow` (label-based state machine for issue triage).
-- **`devsquad.triage` agent**: orchestrates issue intake, bug reproduction, and state transitions.
+- **`frontiersquad.triage` agent**: orchestrates issue intake, bug reproduction, and state transitions.
 - **LSP server detection hook**: sessionStart hook checks for LSP config and seeds `.memory/lsp-status.md` so agents can adapt tool strategy.
 - **Pattern anchoring** in `implement.execute`: search the codebase for similar implementations before writing new code.
 - **Context budget awareness** in `implement.execute`: compress completed work and request fresh context when conversation grows large.
 - **Spec conformance check** in `implement.verify`: verify the diff against acceptance criteria beyond green tests, with `CONFORMANCE_GAP` verdict.
 - **Prompt injection guard** in `debugging-recovery`: untrusted content warning before the Localize step.
-- **Documentation style rules** in `copilot-instructions.md`: universal coverage for all agents, not only devsquad.
+- **Documentation style rules** in `copilot-instructions.md`: universal coverage for all agents, not only frontiersquad.
 - **Platform-aware PR creation** in `pull-request` skill: detects GitHub vs Azure DevOps from board-config and uses corresponding MCP tools.
 - **ADO repo tools** wired into `implement`, `implement.finalize`, `review`, and `refine` agents (`repo_pull_request`, `repo_pull_request_write`, `repo_branch`, `repo_create_branch`, `repo_pull_request_thread`, `repo_pull_request_thread_write`).
 - **Conductor routing** for artifact management: branch, commit, push, and PR operations for phase artifacts (envisioning, specs, ADRs) handled directly by the conductor without delegating to implement.
@@ -131,9 +142,9 @@ The source vocabulary in "The Architecture of Intent" includes constructs this r
 
 - **Mandatory failure capture** in `debugging-recovery`: every resolved fix now captures a structured record to harness-learnings (previously conditional).
 - **`implement.execute`**: replaced dogmatic TDD with `test-discipline` skill reference, consolidated Bug Fix Flow.
-- **`devsquad.plan`**: added Refactor Mode with `deep-clarification` integration.
-- **`devsquad.specify`**: wired `domain-glossary` and `deep-clarification` skills.
-- **`devsquad.decompose`**: wired `domain-glossary`, added needs-human count.
+- **`frontiersquad.plan`**: added Refactor Mode with `deep-clarification` integration.
+- **`frontiersquad.specify`**: wired `domain-glossary` and `deep-clarification` skills.
+- **`frontiersquad.decompose`**: wired `domain-glossary`, added needs-human count.
 - **`work-item-creation` skill**: durability rules, HITL/AFK autonomy classification.
 - **Specs instruction**: added vertical slice (tracer bullet) terminology.
 - **Tasks instruction**: added tracer-bullet-first guidance.
@@ -149,7 +160,7 @@ The source vocabulary in "The Architecture of Intent" includes constructs this r
 
 ### Added
 
-- **`harness-learnings` skill**: Capture and consult codebase-specific learnings across the lifecycle. Agents record patterns discovered through correction loops, review findings, and test prerequisites in `.memory/harness-learnings.md`. Two-tier maturation: fast local capture (Tier 1) with confidence scoring, promotion to permanent harness controls via `devsquad.extend` (Tier 2). See ADR-0013.
+- **`harness-learnings` skill**: Capture and consult codebase-specific learnings across the lifecycle. Agents record patterns discovered through correction loops, review findings, and test prerequisites in `.memory/harness-learnings.md`. Two-tier maturation: fast local capture (Tier 1) with confidence scoring, promotion to permanent harness controls via `frontiersquad.extend` (Tier 2). See ADR-0013.
 - **Hook output contract**: PostToolUse validation hooks now emit structured JSON with `decision`, `reason`, `instructions`, `files`, and `severity` fields, enabling agents to self-correct from hook feedback without interpreting raw output.
 - **ADR-0013 (Harness Learnings)**: Architecture decision for `.memory`-based lifecycle learning mechanism, inspired by harness engineering (Fowler 2025, OpenAI 2025).
 - **Agent wiring for harness-learnings**: `implement.execute`, `implement.verify`, `review.code`, `refine.health`, `implement.finalize`, and `debugging-recovery` now consult and capture learnings at their natural feedback points.
@@ -164,20 +175,20 @@ The source vocabulary in "The Architecture of Intent" includes constructs this r
 
 ### Added
 
-- **Spec amendment during implementation**: when implementation reveals that a spec or ADR no longer matches reality, the implement agent now surfaces a drift flag and offers a scoped amendment instead of silently continuing. The developer confirms, rejects, or defers. See the [concept doc](https://microsoft.github.io/devsquad-copilot/concepts/spec-amendment/).
-- **`devsquad.refine` is now invocable mid-implementation** via the `[AMEND]` prompt prefix for scoped spec/ADR edits, in addition to its existing backlog-health role.
+- **Spec amendment during implementation**: when implementation reveals that a spec or ADR no longer matches reality, the implement agent now surfaces a drift flag and offers a scoped amendment instead of silently continuing. The developer confirms, rejects, or defers. See the [concept doc](https://microsoft.github.io/frontiersquad-copilot/concepts/spec-amendment/).
+- **`frontiersquad.refine` is now invocable mid-implementation** via the `[AMEND]` prompt prefix for scoped spec/ADR edits, in addition to its existing backlog-health role.
 
 ### Changed
 
 - **Usage Scenarios tab renamed**: `Feature-first` is now `Scope-stable`. The iterative scenario is now the first tab. Anyone automating against tab labels will need to update.
-- **Spec authoring guidance updated**: specs should describe the smallest vertical slice that delivers user-visible value and are now explicitly treated as living artifacts that can be amended mid-flight. Affects what `devsquad.specify` produces.
+- **Spec authoring guidance updated**: specs should describe the smallest vertical slice that delivers user-visible value and are now explicitly treated as living artifacts that can be amended mid-flight. Affects what `frontiersquad.specify` produces.
 
 ### Known Limitations (v1 of the amendment seam)
 
 Documented in the concept doc. Relevant if you plan to rely on the new amendment flow:
 
-- After an amendment, `devsquad.decompose` regenerates tasks for the whole feature. Expect task IDs and board items to churn.
-- Design artifacts (`plan.md`, `data-model.md`, `contracts/`) are flagged but not auto-updated on high-impact amendments. A manual `devsquad.plan` pass is required before resume.
+- After an amendment, `frontiersquad.decompose` regenerates tasks for the whole feature. Expect task IDs and board items to churn.
+- Design artifacts (`plan.md`, `data-model.md`, `contracts/`) are flagged but not auto-updated on high-impact amendments. A manual `frontiersquad.plan` pass is required before resume.
 - Multi-developer concurrency is not guarded. Coordinate manually when another developer is mid-implementation on an amended story.
 - No strict mode for regulated contexts. Reject and defer allow continuation under a known-stale spec.
 
@@ -202,8 +213,8 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 
 - **Prove-It bug fix flow**: Enhanced `implement.execute` bug fix flow to require confirming test failure for the correct reason before fixing, and running full test suite after fix
 - **Save-point protocol**: `implement.execute` now commits after each passing task group and reverts to last committed state on failure instead of debugging on top of broken state
-- **Review severity labels**: Standardized 4-tier severity system (Critical/Major/Minor/Suggestion) with explicit author actions and finding prefixes across `devsquad.review` coordinator and `devsquad.review.code` worker
-- **Chesterton's Fence rule**: `devsquad.review.code` now requires verifying why code exists (via git blame) before recommending removal or simplification
+- **Review severity labels**: Standardized 4-tier severity system (Critical/Major/Minor/Suggestion) with explicit author actions and finding prefixes across `frontiersquad.review` coordinator and `frontiersquad.review.code` worker
+- **Chesterton's Fence rule**: `frontiersquad.review.code` now requires verifying why code exists (via git blame) before recommending removal or simplification
 - **`debugging-recovery` reference**: `implement.execute` now references the debugging skill for structured triage instead of unguided "max 2 attempts then escalate"
 
 ## [v0.7.2] - 2026-04-08
@@ -216,7 +227,7 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 
 ### Changed
 
-- Remove duplicated `docs/framework/` content that is fully covered by the [docs-site](https://microsoft.github.io/devsquad-copilot/); only ADRs (`decisions/`) and images are kept
+- Remove duplicated `docs/framework/` content that is fully covered by the [docs-site](https://microsoft.github.io/frontiersquad-copilot/); only ADRs (`decisions/`) and images are kept
 - Consolidate README into a concise landing page that links to the docs-site for details
 - Update all stale `docs/framework/` references in agents (`extend`, `conductor`, `envision`), plugin README, CONTRIBUTING, and sync script to point to docs-site URLs
 - Add active development banner to all docs-site pages
@@ -226,10 +237,10 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 ### Added
 
 - **Nested sub-agent architecture** (ADR 0012): Decomposed 4 monolithic agents into coordinator + worker patterns leveraging VS Code 1.113 nested subagent support (`chat.subagents.allowInvocationsFromSubagents`)
-  - `devsquad.review` → coordinator with 5 parallel compliance checkers: `review.spec`, `review.adr`, `review.code`, `review.security`, `review.tests`
-  - `devsquad.implement` → coordinator with 4 workers: `implement.validate`, `implement.execute`, `implement.verify`, `implement.finalize` (plus existing `review` sub-agent)
-  - `devsquad.plan` → coordinator with 3 workers: `plan.context`, `plan.architecture`, `plan.design` (plus `security` sub-agent)
-  - `devsquad.refine` → coordinator with 2 parallel workers: `refine.artifacts`, `refine.health`
+  - `frontiersquad.review` → coordinator with 5 parallel compliance checkers: `review.spec`, `review.adr`, `review.code`, `review.security`, `review.tests`
+  - `frontiersquad.implement` → coordinator with 4 workers: `implement.validate`, `implement.execute`, `implement.verify`, `implement.finalize` (plus existing `review` sub-agent)
+  - `frontiersquad.plan` → coordinator with 3 workers: `plan.context`, `plan.architecture`, `plan.design` (plus `security` sub-agent)
+  - `frontiersquad.refine` → coordinator with 2 parallel workers: `refine.artifacts`, `refine.health`
 - 14 new worker agent files, all with `user-invocable: false` and minimal tool sets
 - ADR 0012: Nested Subagent Architecture (Status: Proposed, supersedes ADR 0011)
 - `plan` → `security` sub-agent wiring (previously documented but not connected in frontmatter)
@@ -254,7 +265,7 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 - **Init deterministic operations**: Replaced ~45K chars of embedded template content in `init-config` and `init-docs` skill references with `sdd-init.sh` shell script that performs file verification, diff, creation, and updates deterministically
   - 14 template files extracted to `hooks/templates/` with directory-based layout mirroring target paths
   - `init-config` and `init-docs` skills rewritten to delegate all file operations to the script
-  - `devsquad.init` agent Steps 1-3 updated to use script commands (verify, create, create-missing, update-all, diff)
+  - `frontiersquad.init` agent Steps 1-3 updated to use script commands (verify, create, create-missing, update-all, diff)
 
 ### Fixed
 
@@ -272,15 +283,15 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 ### Changed
 
 - **Subagent nesting resolution (ADR 0011)**: Converted L2 sub-agents to skills to comply with GitHub Copilot's 1-level subagent nesting limit, enabling the conductor guided mode to work correctly
-  - `devsquad.security` workflow extracted to `security-review` skill (consumed by plan, implement, review agents)
-  - `devsquad.refine` backlog health checks flattened into `devsquad.sprint` agent
-  - `devsquad.init-config` converted to `init-config` skill with `references/templates.md`
-  - `devsquad.init-docs` converted to `init-docs` skill with `references/templates.md`
-  - `devsquad.init-scaffold` converted to `init-scaffold` skill
-  - `devsquad.init` rewritten to use skills instead of sub-agents
-  - `devsquad.plan`, `devsquad.review`: removed `agents:` field and `agent` tool, security review now via skill
-  - `devsquad.implement`: removed `devsquad.security` from `agents:` (kept `devsquad.review`), security review now via skill
-  - `devsquad.sprint`: removed `agents:` field and `agent` tool, backlog health analysis inlined from refine
+  - `frontiersquad.security` workflow extracted to `security-review` skill (consumed by plan, implement, review agents)
+  - `frontiersquad.refine` backlog health checks flattened into `frontiersquad.sprint` agent
+  - `frontiersquad.init-config` converted to `init-config` skill with `references/templates.md`
+  - `frontiersquad.init-docs` converted to `init-docs` skill with `references/templates.md`
+  - `frontiersquad.init-scaffold` converted to `init-scaffold` skill
+  - `frontiersquad.init` rewritten to use skills instead of sub-agents
+  - `frontiersquad.plan`, `frontiersquad.review`: removed `agents:` field and `agent` tool, security review now via skill
+  - `frontiersquad.implement`: removed `frontiersquad.security` from `agents:` (kept `frontiersquad.review`), security review now via skill
+  - `frontiersquad.sprint`: removed `agents:` field and `agent` tool, backlog health analysis inlined from refine
 
 ### Added
 
@@ -292,9 +303,9 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 
 ### Removed
 
-- `devsquad.init-config` agent (replaced by `init-config` skill)
-- `devsquad.init-docs` agent (replaced by `init-docs` skill)
-- `devsquad.init-scaffold` agent (replaced by `init-scaffold` skill)
+- `frontiersquad.init-config` agent (replaced by `init-config` skill)
+- `frontiersquad.init-docs` agent (replaced by `init-docs` skill)
+- `frontiersquad.init-scaffold` agent (replaced by `init-scaffold` skill)
 
 ## [v0.5.0] - 2026-03-21
 
@@ -309,12 +320,12 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 
 ### Changed
 
-- **`devsquad.specify`**: Spec type detection (feature vs migration) with heuristic-based suggestion from description keywords. Full migration flow: migration short name generation, migration directory creation, migration template loading, migration-specific execution steps, validation, and guidelines
-- **`devsquad.plan`**: Context detection for both `docs/features/` and `docs/migrations/`. New Step 4M (Migration Architecture) with infrastructure mapping analysis, data migration architecture, and cutover/rollback architecture. Migration-specific artifact generation (`infra-mapping.md`, `migration-plan.md`). Additional security review triggers for migration scenarios
-- **`devsquad.decompose`**: Dual spec loading from features and migrations directories. Migration-specific task generation with 6-phase structure (Setup, Foundational, Infrastructure Provisioning, Data Migration Setup, Cutover Automation, Rollback and Validation, Polish). Migration-specific consistency validation
+- **`frontiersquad.specify`**: Spec type detection (feature vs migration) with heuristic-based suggestion from description keywords. Full migration flow: migration short name generation, migration directory creation, migration template loading, migration-specific execution steps, validation, and guidelines
+- **`frontiersquad.plan`**: Context detection for both `docs/features/` and `docs/migrations/`. New Step 4M (Migration Architecture) with infrastructure mapping analysis, data migration architecture, and cutover/rollback architecture. Migration-specific artifact generation (`infra-mapping.md`, `migration-plan.md`). Additional security review triggers for migration scenarios
+- **`frontiersquad.decompose`**: Dual spec loading from features and migrations directories. Migration-specific task generation with 6-phase structure (Setup, Foundational, Infrastructure Provisioning, Data Migration Setup, Cutover Automation, Rollback and Validation, Polish). Migration-specific consistency validation
 - **`quality-gate` skill**: Split spec rubric by type (feature vs migration) with directory-based detection
-- **`devsquad.init-docs`**: Manages 4 files (was 3). Creates `docs/migrations/` directory and distributes migration spec template to consumer repos
-- **`devsquad.init-config`**: Manages 10 files (was 8). Distributes `migration-specs.instructions.md` and `migration-tasks.instructions.md` to consumer repos
+- **`frontiersquad.init-docs`**: Manages 4 files (was 3). Creates `docs/migrations/` directory and distributes migration spec template to consumer repos
+- **`frontiersquad.init-config`**: Manages 10 files (was 8). Distributes `migration-specs.instructions.md` and `migration-tasks.instructions.md` to consumer repos
 - **Feature spec templates**: Added Related Specs section for bidirectional linking with migration specs (both `docs/features/TEMPLATE.md` and `docs/templates/feature-spec.md`)
 
 ## [v0.4.0] - 2026-03-20
@@ -324,10 +335,10 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 - **Tool Extensions [Preview]**: Consumers can inject any MCP server tools (Confluence, Jira, Slack, Datadog, SonarQube, custom APIs) into existing plugin agents via YAML patches and a sync script
   - `sync-tool-extensions.sh`: Generates workspace agent overrides by merging plugin agents with consumer tool-extension YAML files. Multi-platform plugin discovery (Copilot CLI, VS Code) across macOS, Linux, and Windows
   - `detect-tool-extensions.sh`: sessionStart hook that warns when extensions are unsynced, stale, or the plugin version changed
-  - Configurable plugin name via `DEVSQUAD_PLUGIN_NAME` for forks, and explicit path override via `DEVSQUAD_PLUGIN_DIR`
+  - Configurable plugin name via `FRONTIERSQUAD_PLUGIN_NAME` for forks, and explicit path override via `FRONTIERSQUAD_PLUGIN_DIR`
   - Tool name validation, atomic writes, overwrite protection for manually-created agent overrides, and empty YAML fail-fast
 - **ADR-0010 (Agent Tool Extension)**: Documents the decision to use agent overlay generation over skill bridge, fixed extension port, and native extend YAML approaches
-- **`devsquad.extend` agent**: Updated with Tool Extension as a mechanism option, scaffolding steps (MCP config, YAML template, script copy, sync), and quality checklist
+- **`frontiersquad.extend` agent**: Updated with Tool Extension as a mechanism option, scaffolding steps (MCP config, YAML template, script copy, sync), and quality checklist
 
 ### Changed
 
@@ -341,7 +352,7 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 ### Added
 
 - **New skill (`diagram-design`)**: Design and review guidance for architecture diagrams covering readability principles, review checklist, visual design (shapes, colors, accessibility), tool selection (Mermaid vs Draw.io), and mermaid diagram type selection
-- **`azure/wellarchitectedframework` tool** added to `devsquad.plan` and `devsquad.security` agents
+- **`azure/wellarchitectedframework` tool** added to `frontiersquad.plan` and `frontiersquad.security` agents
 
 ### Changed
 
@@ -358,7 +369,7 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 
 ### Changed
 
-- **Agent namespace**: Renamed all `sdd.*` agents to `devsquad.*` namespace
+- **Agent namespace**: Renamed all `sdd.*` agents to `frontiersquad.*` namespace
 - **Plugin restructure**: Restructured as self-contained plugin for VS Code compatibility
 - **README**: Improved storytelling, added audience guide, consolidated usage section
 
@@ -371,24 +382,24 @@ Documented in the concept doc. Relevant if you plan to rely on the new amendment
 
 ## [v0.1.0] - 2026-03-13
 
-Initial release of the DevSquad Delivery Framework.
+Initial release of the FrontierSquad Delivery Framework.
 
 ### Added
 
-- **Conductor agent (`devsquad`)**: Unified entry point that guides the developer through all phases with Socratic behavior and delegation to specialized agents
+- **Conductor agent (`frontiersquad`)**: Unified entry point that guides the developer through all phases with Socratic behavior and delegation to specialized agents
 - **16 specialized agents**:
-  - `devsquad.init`: Project scaffolding with sub-agents for configuration (`devsquad.init-config`), documentation templates (`devsquad.init-docs`), and community files (`devsquad.init-scaffold`)
-  - `devsquad.envision`: Strategic vision capture through structured questions about customer, pain points, goals, and business context
-  - `devsquad.kickoff`: Project hierarchy structuring (epics, features, dependencies) with board sync
-  - `devsquad.specify`: Feature specification creation from natural language descriptions with requirements clarification
-  - `devsquad.plan`: Implementation planning with architecture design, Azure best practices, and cost estimates
-  - `devsquad.decompose`: Spec decomposition into user stories, tasks, and work items on GitHub Issues or Azure Boards
-  - `devsquad.implement`: Task execution with incremental commits, CI failure diagnosis, and coverage verification
-  - `devsquad.security`: Dual-mode security assessment (architectural threat modeling and code vulnerability analysis)
-  - `devsquad.review`: Implementation validation against spec, ADRs, and plan with PR inline comments
-  - `devsquad.refine`: Backlog health analysis, inconsistency detection, and item readiness classification
-  - `devsquad.sprint`: Sprint planning with velocity analysis, adaptive capacity, and committed vs stretch scope
-  - `devsquad.extend`: Extension guide for creating custom skills, agents, hooks, and instructions
+  - `frontiersquad.init`: Project scaffolding with sub-agents for configuration (`frontiersquad.init-config`), documentation templates (`frontiersquad.init-docs`), and community files (`frontiersquad.init-scaffold`)
+  - `frontiersquad.envision`: Strategic vision capture through structured questions about customer, pain points, goals, and business context
+  - `frontiersquad.kickoff`: Project hierarchy structuring (epics, features, dependencies) with board sync
+  - `frontiersquad.specify`: Feature specification creation from natural language descriptions with requirements clarification
+  - `frontiersquad.plan`: Implementation planning with architecture design, Azure best practices, and cost estimates
+  - `frontiersquad.decompose`: Spec decomposition into user stories, tasks, and work items on GitHub Issues or Azure Boards
+  - `frontiersquad.implement`: Task execution with incremental commits, CI failure diagnosis, and coverage verification
+  - `frontiersquad.security`: Dual-mode security assessment (architectural threat modeling and code vulnerability analysis)
+  - `frontiersquad.review`: Implementation validation against spec, ADRs, and plan with PR inline comments
+  - `frontiersquad.refine`: Backlog health analysis, inconsistency detection, and item readiness classification
+  - `frontiersquad.sprint`: Sprint planning with velocity analysis, adaptive capacity, and committed vs stretch scope
+  - `frontiersquad.extend`: Extension guide for creating custom skills, agents, hooks, and instructions
 - **13 skills**: adr-workflow, board-config, complexity-analysis, documentation-style, engineering-practices, git-branch, git-commit, next-task, pull-request, quality-gate, reasoning, work-item-creation, work-item-workflow
 - **5 path-specific instructions**: Feature specs, ADRs, task lists, envisioning documents, and documentation style
 - **4 session hooks**: Repository platform detection, branching strategy detection (trunk-based vs GitFlow), work item tag validation, and markdown linting

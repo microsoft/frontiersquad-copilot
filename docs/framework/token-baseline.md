@@ -1,6 +1,6 @@
-# DevSquad Copilot: Token Usage Baseline
+# FrontierSquad Copilot: Token Usage Baseline
 
-Estimation of GitHub Copilot token consumption when running the DevSquad framework end-to-end, so you can project the cost of adopting it. The baseline is expressed in tokens (which stay stable) and section 5 shows how to convert tokens to dollars or AI credits with your model's current rates. Use this as a planning baseline. Actual usage will vary with codebase size, model choice, retry loops, and how much context lives outside the framework.
+Estimation of GitHub Copilot token consumption when running the FrontierSquad framework end-to-end, so you can project the cost of adopting it. The baseline is expressed in tokens (which stay stable) and section 5 shows how to convert tokens to dollars or AI credits with your model's current rates. Use this as a planning baseline. Actual usage will vary with codebase size, model choice, retry loops, and how much context lives outside the framework.
 
 ## 1. Token-to-cost conversion
 
@@ -153,9 +153,9 @@ To turn this monthly volume into a bill, apply the method in section 5 to the in
 
 Note: Copilot Business and Enterprise seats include per-user AI credits pooled across the organization. Verify the included allotment and per-token overage rates on your billing page.
 
-## 7. Framework-specific overhead (what DevSquad adds on top of ad-hoc Copilot use)
+## 7. Framework-specific overhead (what FrontierSquad adds on top of ad-hoc Copilot use)
 
-Isolated cost of running through DevSquad versus an unstructured Copilot session producing similar code:
+Isolated cost of running through FrontierSquad versus an unstructured Copilot session producing similar code:
 
 | Source of overhead | Tokens per feature (medium) |
 | --- | ---: |
@@ -194,7 +194,7 @@ Listed in order of leverage:
 ## 10. How to validate this baseline in practice
 
 1. Pick one medium feature.
-2. Run the full sequence end-to-end: `/devsquad.specify`, then `/devsquad.plan`, then `/devsquad.decompose`, then `/devsquad.implement`, then `/devsquad.review`.
+2. Run the full sequence end-to-end: `/frontiersquad.specify`, then `/frontiersquad.plan`, then `/frontiersquad.decompose`, then `/frontiersquad.implement`, then `/frontiersquad.review`.
 3. Download the **usage report CSV** from the premium request analytics page. Each row will include `aic_quantity` and `aic_gross_amount`.
 4. Filter rows by the session window. Compare the AI-credit total against the medium-feature estimate in section 5 (and the token totals in section 4). Because your account converts tokens to credits at whatever per-token rates are current, this validates the baseline without the doc hardcoding any rate.
 5. If actuals deviate by more than 2x, the dominant cause is almost always (a) model choice mismatch or (b) retry loops on a small number of tasks. Inspect with `harness-learnings` skill.

@@ -3,7 +3,7 @@ title: Development Skills
 description: Skills for language-server setup, debugging, branch management, commit standards, PR finalization, and task progression.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Aside, Badge } from '@astrojs/starlight/components';
@@ -180,8 +180,8 @@ flowchart TD
   C --> D["Push branch"]
   D --> E["Open PR"]
   E --> F{"Impact level?"}
-  F -->|"High"| G["Trigger full\ndevsquad.review"]
-  F -->|"Medium/Low +\nsecurity trigger"| H["Trigger\ndevsquad.security"]
+  F -->|"High"| G["Trigger full\nfrontiersquad.review"]
+  F -->|"Medium/Low +\nsecurity trigger"| H["Trigger\nfrontiersquad.security"]
   F -->|"Medium/Low,\nno trigger"| I["Standard PR"]
   G --> J["Check CI status"]
   H --> J
@@ -193,8 +193,8 @@ flowchart TD
 **Review routing by impact:**
 | Impact | Security Trigger | Review Action |
 |--------|-----------------|---------------|
-| High | Any | Full `devsquad.review` (includes security) |
-| Medium/Low | Yes | `devsquad.security` only |
+| High | Any | Full `frontiersquad.review` (includes security) |
+| Medium/Low | Yes | `frontiersquad.security` only |
 | Medium/Low | No | Standard PR, no automated review |
 
 **Technical debt tracking:** If the implementation introduced shortcuts or deferred work, the skill records tech debt items linked to the PR.

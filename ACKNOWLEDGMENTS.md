@@ -1,6 +1,6 @@
 # Acknowledgments
 
-This project was shaped by ideas, patterns, and prior art from many sources across the community. We want to recognize the projects, articles, and resources that influenced the design and direction of the DevSquad Copilot framework.
+This project was shaped by ideas, patterns, and prior art from many sources across the community. We want to recognize the projects, articles, and resources that influenced the design and direction of the FrontierSquad Copilot framework.
 
 ## Repositories
 

@@ -1,14 +1,14 @@
 ---
 title: Architecture Decisions
-description: All 14 Architecture Decision Records documenting significant technical decisions.
+description: All 15 Architecture Decision Records documenting significant technical decisions.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Badge, Aside } from '@astrojs/starlight/components';
 
-Architecture Decision Records (ADRs) document significant technical decisions made during the development of DevSquad Copilot. Each records the context, priorities, options evaluated, and the chosen decision with trade-offs.
+Architecture Decision Records (ADRs) document significant technical decisions made during the development of FrontierSquad Copilot. Each records the context, priorities, options evaluated, and the chosen decision with trade-offs.
 
 :::note
 **Proposed** ADRs are open for discussion and may change. If you are implementing against a Proposed ADR, treat its decisions as provisional and flag this in your task notes. Only **Accepted** ADRs represent finalized team decisions.
@@ -56,7 +56,7 @@ ADR 0011 is now historical context. ADR 0012 documents the current nested sub-ag
 
 **Decision**: Differentiated model. Instructions (deterministic glob, fewer than 50 lines), Skills (semantic, 50–200 lines), Agents (explicit, more than 200 lines), Hooks (event-triggered, zero LLM cost), MCP Servers (tool calls).
 
-**Trade-off**: Greater cognitive complexity for extension authors. Mitigated by decision tree and `devsquad.extend`.
+**Trade-off**: Greater cognitive complexity for extension authors. Mitigated by decision tree and `frontiersquad.extend`.
 
 ---
 
@@ -140,7 +140,7 @@ ADR 0011 is now historical context. ADR 0012 documents the current nested sub-ag
 
 **Priorities**: (1) Zero-friction capture, (2) Immediate availability, (3) Whole-lifecycle coverage, (4) Self-curation, (5) Path to durability, (6) Low context cost, (7) Consistency with existing patterns.
 
-**Decision**: Store learnings in `.memory/harness-learnings.md` (workspace-local, structured markdown) via a new `harness-learnings` skill. Two-tier lifecycle: Tier 1 captures with confidence scoring and auto-pruning; Tier 2 promotes proven learnings to permanent harness controls (instructions, hooks, skill amendments) via `devsquad.extend`.
+**Decision**: Store learnings in `.memory/harness-learnings.md` (workspace-local, structured markdown) via a new `harness-learnings` skill. Two-tier lifecycle: Tier 1 captures with confidence scoring and auto-pruning; Tier 2 promotes proven learnings to permanent harness controls (instructions, hooks, skill amendments) via `frontiersquad.extend`.
 
 **Trade-off**: Workspace-local file means learnings do not automatically propagate across team members; the Tier 2 promotion path is the mechanism for sharing. Accepted in exchange for zero-friction capture and immediate availability without release cycles.
 
@@ -155,6 +155,18 @@ ADR 0011 is now historical context. ADR 0012 documents the current nested sub-ag
 **Decision**: Selective adoption from "The Architecture of Intent" (Marcel Aldecoa). `## Behavioral Constraints` body section on user-facing agents (rules `tools:` cannot enforce). `## Composition` body section with cross-component invariants on coordinators. Spec Evolution Log in feature and migration spec templates. Gated `AI Cost Posture` block in the feature spec template (model-tier, latency budget, prompt stability, cost ceiling, escalation) for specs that embed AI behavior. Three-category upstream-artifact failure taxonomy (`spec`, `validation`, `agent`) in `debugging-recovery`.
 
 **Trade-off**: Imports the load-bearing AoI principles for agent-class governance without adopting the four AoI signal metrics, custom frontmatter scalars, pattern taxonomy, or phase rename. Non-agent specs are unaffected.
+
+---
+
+## ADR 0015: Framework Namespace Migration <Badge text="Accepted" variant="success" />
+
+**Problem**: Following the internal team rename from DevSquad to FrontierSquad and the repository rename to `microsoft/frontiersquad-copilot`, every plugin, agent, hook, lockfile, URL, and documentation identifier needed to migrate without retaining legacy compatibility branches or stale logo assets.
+
+**Priorities**: (1) Complete brand and identifier alignment, (2) Valid live URLs and plugin resolution, (3) Zero legacy maintenance overhead, (4) No stale visual branding.
+
+**Decision**: Full hard-cut migration across identifiers, URLs, and assets. Updates repository and Pages URLs (`microsoft/frontiersquad-copilot` and `/frontiersquad-copilot/`), marketplace (`frontiersquad-copilot`), plugin (`frontiersquad`), directory (`.github/plugins/frontiersquad`), 28 agents (`frontiersquad.*`), consumer paths (`.github/frontiersquad/`), env vars (`FRONTIERSQUAD_PLUGIN_*`), and provenance headers (`frontiersquad-template:`), and removes legacy raster logos.
+
+**Trade-off**: Requires a one-time manual migration for existing consumer repositories (re-register marketplace source, reinstall plugin, rename `.github/devsquad/` to `.github/frontiersquad/`, and strip legacy provenance headers) in exchange for zero legacy compatibility debt.
 
 ---
 

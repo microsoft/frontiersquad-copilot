@@ -1,9 +1,9 @@
 ---
 title: FAQ
-description: Frequently asked questions about DevSquad Copilot.
+description: Frequently asked questions about FrontierSquad Copilot.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Aside, LinkCard, CardGrid } from '@astrojs/starlight/components';
@@ -12,37 +12,37 @@ import { Aside, LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 ### Do I have to use all phases or can I skip some?
 
-Each phase produces artifacts that reduce rework downstream. However, you can enter the workflow at any point. Use `@devsquad.implement` directly if you already have a task, or `@devsquad.specify` if you know what feature to build. See [Usage Scenarios](../framework/#usage-scenarios) for workflow patterns.
+Each phase produces artifacts that reduce rework downstream. However, you can enter the workflow at any point. Use `@frontiersquad.implement` directly if you already have a task, or `@frontiersquad.specify` if you know what feature to build. See [Usage Scenarios](../framework/#usage-scenarios) for workflow patterns.
 
 ### Is this only for teams, or can solo developers use it?
 
 Both. Many features (ADRs, specs, tasks, comprehension checkpoints) are valuable even for solo projects. The framework scales down: skip sprint planning and board sync, keep specs and ADRs for your future self.
 
-### What AI models does DevSquad support?
+### What AI models does FrontierSquad support?
 
 The framework is model-agnostic (Design Principle 5). It works with whatever model is configured in your GitHub Copilot subscription. The framework does not prescribe which models to use.
 
 ### Do I need GitHub Copilot Business or Enterprise?
 
-DevSquad requires a GitHub Copilot subscription that supports chat plugins. Check your organization's Copilot plan for plugin support.
+FrontierSquad requires a GitHub Copilot subscription that supports chat plugins. Check your organization's Copilot plan for plugin support.
 
 ## Workflow
 
-### My team uses Azure DevOps. Does DevSquad work?
+### My team uses Azure DevOps. Does FrontierSquad work?
 
 Yes. The framework auto-detects your platform from the git remote URL and supports Agile, Scrum, Basic, and CMMI process templates. See [Work Items](../work-items/).
 
 ### How do I know when to make a new ADR vs update an existing one?
 
-The `adr-workflow` skill checks for duplicates automatically when you use `@devsquad.plan`. If a related ADR exists, it surfaces it and asks whether to update or create a new one with a supersedes reference.
+The `adr-workflow` skill checks for duplicates automatically when you use `@frontiersquad.plan`. If a related ADR exists, it surfaces it and asks whether to update or create a new one with a supersedes reference.
 
 ### What is the difference between guided mode and direct mode?
 
-**Guided**: Invoke `@devsquad`; the conductor walks through phases sequentially, asking Socratic questions. **Direct**: Invoke `@devsquad.<agent>` to go straight to a specific capability. Both modes use the same agents, skills, and quality gates.
+**Guided**: Invoke `@frontiersquad`; the conductor walks through phases sequentially, asking Socratic questions. **Direct**: Invoke `@frontiersquad.<agent>` to go straight to a specific capability. Both modes use the same agents, skills, and quality gates.
 
-### Can I use DevSquad with an existing project that already has code?
+### Can I use FrontierSquad with an existing project that already has code?
 
-Yes. Use `@devsquad.init` to add framework files, then `@devsquad.kickoff` to map your existing board structure. Specs and ADRs can be created retroactively for undocumented features.
+Yes. Use `@frontiersquad.init` to add framework files, then `@frontiersquad.kickoff` to map your existing board structure. Specs and ADRs can be created retroactively for undocumented features.
 
 ## Guardrails
 

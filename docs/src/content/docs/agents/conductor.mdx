@@ -1,14 +1,14 @@
 ---
-title: "Conductor (devsquad)"
+title: "Conductor (frontiersquad)"
 description: The central orchestrator that detects user intent and delegates to specialist agents.
 banner:
   content: |
-    This project is under active development and subject to breaking changes. See the <a href="/devsquad-copilot/changelog/">changelog</a> for release notes.
+    This project is under active development and subject to breaking changes. See the <a href="/frontiersquad-copilot/changelog/">changelog</a> for release notes.
 ---
 
 import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
 
-The `devsquad` agent is the **unified entry point** for the framework. It does not contain domain logic. Instead, it detects user intent and delegates to the appropriate specialist agent.
+The `frontiersquad` agent is the **unified entry point** for the framework. It does not contain domain logic. Instead, it detects user intent and delegates to the appropriate specialist agent.
 
 ## How It Works
 
@@ -24,18 +24,18 @@ The `devsquad` agent is the **unified entry point** for the framework. It does n
 
 | User Intent | Delegated To |
 |------------|-------------|
-| "Set up my project" | `devsquad.init` |
-| "Let's define the vision" | `devsquad.envision` |
-| "Structure the project" | `devsquad.kickoff` |
-| "Write a spec for feature X" | `devsquad.specify` |
-| "Plan the architecture" | `devsquad.plan` |
-| "Break this into tasks" | `devsquad.decompose` |
-| "Implement task X" | `devsquad.implement` |
-| "Review the implementation" | `devsquad.review` |
-| "Run a security assessment" | `devsquad.security` |
-| "Plan the sprint" | `devsquad.sprint` |
-| "Check backlog health" | `devsquad.refine` |
-| "Add a custom skill" | `devsquad.extend` |
+| "Set up my project" | `frontiersquad.init` |
+| "Let's define the vision" | `frontiersquad.envision` |
+| "Structure the project" | `frontiersquad.kickoff` |
+| "Write a spec for feature X" | `frontiersquad.specify` |
+| "Plan the architecture" | `frontiersquad.plan` |
+| "Break this into tasks" | `frontiersquad.decompose` |
+| "Implement task X" | `frontiersquad.implement` |
+| "Review the implementation" | `frontiersquad.review` |
+| "Run a security assessment" | `frontiersquad.security` |
+| "Plan the sprint" | `frontiersquad.sprint` |
+| "Check backlog health" | `frontiersquad.refine` |
+| "Add a custom skill" | `frontiersquad.extend` |
 
 <Aside type="tip">
   In VS Code, nested specialist workflows require `chat.subagents.allowInvocationsFromSubagents` enabled. The conductor remains the same entry point; coordinator specialists handle the internal worker fan-out.
@@ -49,7 +49,7 @@ The `devsquad` agent is the **unified entry point** for the framework. It does n
 | `board-config` | Platform detection (GitHub Issues or Azure DevOps) |
 
 <Aside type="tip">
-  You can always bypass the conductor and invoke any agent directly with `@devsquad.<agent>`. The conductor adds orchestration; direct mode gives immediate access.
+  You can always bypass the conductor and invoke any agent directly with `@frontiersquad.<agent>`. The conductor adds orchestration; direct mode gives immediate access.
 </Aside>
 
 ---

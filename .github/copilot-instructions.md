@@ -105,7 +105,7 @@ This repository is the **SDD Framework source code** (GitHub Copilot plugin). Th
 ├── plugin/
 │   └── marketplace.json
 ├── plugins/
-│   └── devsquad/    # Self-contained plugin (distributed as installable unit)
+│   └── frontiersquad/    # Self-contained plugin (distributed as installable unit)
 │       ├── .github/plugin/plugin.json   # Plugin manifest
 │       ├── agents/          # Custom agents (.agent.md)
 │       ├── skills/          # Agent skills (SKILL.md per directory)
@@ -121,9 +121,9 @@ docs/
 └── features/        # Feature specs
 ```
 
-Load the local plugin through `chat.pluginLocations` in VS Code User Settings (Remote Settings for a remote window), or `copilot --plugin-dir .github/plugins/devsquad` from the repository root. Workspace settings in `.vscode/settings.json` enable plugin support and nested subagents. Do not add `chat.pluginLocations` to workspace settings or recreate agent and skill symlinks.
+Load the local plugin through `chat.pluginLocations` in VS Code User Settings (Remote Settings for a remote window), or `copilot --plugin-dir .github/plugins/frontiersquad` from the repository root. Workspace settings in `.vscode/settings.json` enable plugin support and nested subagents. Do not add `chat.pluginLocations` to workspace settings or recreate agent and skill symlinks.
 
-### Agents (`.github/plugins/devsquad/agents/*.agent.md`)
+### Agents (`.github/plugins/frontiersquad/agents/*.agent.md`)
 
 Official references:
 - [Custom agents (VS Code)](https://code.visualstudio.com/docs/copilot/customization/custom-agents)
@@ -131,7 +131,7 @@ Official references:
 
 Rules:
 
-- Naming: `devsquad.<phase>.agent.md` (e.g., `devsquad.implement.agent.md`).
+- Naming: `frontiersquad.<phase>.agent.md` (e.g., `frontiersquad.implement.agent.md`).
 - Required frontmatter: `description`, `tools`. Optional: `agents`, `handoffs`, `user-invocable`.
 - Sub-agents that should not appear in the dropdown: `user-invocable: false`.
 - Use `agents: [...]` in the coordinator to restrict which sub-agents can be invoked.
@@ -142,7 +142,7 @@ Rules:
 - Prefer parallel execution of sub-agents when subtasks are independent.
 - Coordinator + worker pattern: the coordinator orchestrates, workers execute focused tasks.
 
-### Skills (`.github/plugins/devsquad/skills/<name>/SKILL.md`)
+### Skills (`.github/plugins/frontiersquad/skills/<name>/SKILL.md`)
 
 Official references:
 - [Create skills](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills)
@@ -173,14 +173,14 @@ Rules:
 - Content must be concise and actionable rules, not documentation.
 - Do not duplicate rules that are already in skills or agents.
 
-### Hooks (`.github/plugins/devsquad/hooks/`)
+### Hooks (`.github/plugins/frontiersquad/hooks/`)
 
 Official reference:
 - [Use hooks](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/use-hooks)
 
 Rules:
 
-- Two hooks config files exist: `.github/hooks/hooks.json` (workspace-level, uses `bash` field with workspace-relative paths) and `.github/plugins/devsquad/hooks/hooks.json` (plugin-level, uses `command` field with `${CLAUDE_PLUGIN_ROOT}` paths).
+- Two hooks config files exist: `.github/hooks/hooks.json` (workspace-level, uses `bash` field with workspace-relative paths) and `.github/plugins/frontiersquad/hooks/hooks.json` (plugin-level, uses `command` field with `${CLAUDE_PLUGIN_ROOT}` paths).
 - When adding or modifying hooks, update **both** files to keep them in sync.
 - Scripts must have a shebang (`#!/bin/bash`) and be executable (`chmod +x`).
 - JSON output must be on a single line. Use `jq -c` to validate.
@@ -189,20 +189,20 @@ Rules:
 
 ### Distributed Templates
 
-Config and documentation templates are managed deterministically by `sdd-init.sh` from `.github/plugins/devsquad/hooks/templates/`.
+Config and documentation templates are managed deterministically by `sdd-init.sh` from `.github/plugins/frontiersquad/hooks/templates/`.
 Community files (`SECURITY.md`, `CONTRIBUTING.md`, `LICENSE`, `CODE_OF_CONDUCT.md`) are sourced from `docs/templates/` by the `init-scaffold` skill.
 
 Provenance and lock file:
 
-- Each distributed file (except per-artifact copy-source templates) carries a one-line provenance header: `<!-- devsquad-template: <path> v<version> sha=<sha-12> -->` for markdown, `# devsquad-template: <path> v<version> sha=<sha-12>` for YAML.
+- Each distributed file (except per-artifact copy-source templates) carries a one-line provenance header: `<!-- frontiersquad-template: <path> v<version> sha=<sha-12> -->` for markdown, `# frontiersquad-template: <path> v<version> sha=<sha-12>` for YAML.
 - The four copy-source templates (`docs/features/TEMPLATE.md`, `docs/migrations/TEMPLATE.md`, `docs/envisioning/TEMPLATE.md`, `docs/architecture/decisions/ADR-TEMPLATE.md`) do not receive an inline header so the comment does not leak into authored documents. Their provenance is recorded only in the lock file.
-- Consumer repos get a `.github/devsquad/manifest.lock` (JSON) listing every managed target with `plugin_version`, `template_sha`, and `written_at`.
+- Consumer repos get a `.github/frontiersquad/manifest.lock` (JSON) listing every managed target with `plugin_version`, `template_sha`, and `written_at`.
 - `update-all` is destructive by default for compatibility with existing init flows. Pass `--dry-run` to preview changes without writing. On apply, the script writes a timestamped backup `<target>.pre-<version>-<unix>.bak` before overwriting.
 - `file_status()` strips the provenance header from both sides before comparing, so consumer repos that pre-date the header rollout do not see spurious drift on first upgrade.
 
 When editing templates:
 
-- Update the file in `.github/plugins/devsquad/hooks/templates/` (the source of truth for config and docs templates).
+- Update the file in `.github/plugins/frontiersquad/hooks/templates/` (the source of truth for config and docs templates).
 - Update the file in `docs/templates/` for community file templates.
 - Run `sdd-init.sh verify` to confirm the manifest is consistent.
 
@@ -210,7 +210,7 @@ When editing templates:
 
 - Both `plugin.json` files must always have the same `version` value:
   - `.github/plugin/plugin.json` (root manifest, full paths)
-  - `.github/plugins/devsquad/.github/plugin/plugin.json` (self-contained plugin, relative paths)
+  - `.github/plugins/frontiersquad/.github/plugin/plugin.json` (self-contained plugin, relative paths)
 - When releasing, bump `version` in both files, update `CHANGELOG.md`, commit, and create a git tag (`vX.Y.Z`).
 
 ### General Conventions
